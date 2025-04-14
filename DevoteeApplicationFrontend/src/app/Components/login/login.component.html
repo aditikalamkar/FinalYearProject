@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="overlay"></div>
+  <div class="login-card">
+    <h2 class="title">🔑 WELCOME BACK!</h2>
+    <p class="subtitle">Login to Shri Kal Bhairavnath Portal</p>
+
+    <form #form="ngForm" (ngSubmit)="submitForm(form)" novalidate>
+      
+      <!-- Email -->
+      <div class="form-group">
+        <i class="fa fa-envelope"></i>
+        <input
+        type="email"
+        name="email"
+        [(ngModel)]="login.email"
+        placeholder="Enter Your Email"
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@gmail.com$"
+        #email="ngModel"
+      />
+      
+        <div class="error" *ngIf="email.invalid && email.touched">
+          Enter a valid Gmail address (e.g., example@gmail.com).
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group password-group">
+        <i class="fa fa-lock"></i>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          [(ngModel)]="login.password"
+          placeholder="Enter Password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <i class="fa fa-eye toggle-password" (click)="togglePassword()"></i>
+        <div class="error" *ngIf="password.invalid && password.touched">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="form.invalid">Login</button>
+
+      <p class="forgot-password">
+        <a routerLink="/forget">Forgot Password?</a>
+      </p>
+      <p class="register-text">
+        Don't have an account? <a routerLink="/register">Register</a>
+      </p>
+    </form>
+  </div>
+</div>

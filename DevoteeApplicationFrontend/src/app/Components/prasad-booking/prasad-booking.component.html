@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="booking-card">
+    <h2>PRASAD BOOKING</h2>
+    <p>Feel the presence of the divine in every bite.</p>
+
+    <form #form="ngForm" (ngSubmit)="submitForm(form)" novalidate>
+      
+
+     
+      <!-- Date -->
+      <div class="form-group">
+        <i class="fa fa-calendar"></i>
+        <input type="date" name="date" [(ngModel)]="booking.date" [min]="today" required (change)="updateAvailability()"
+          #date="ngModel" />
+        <div class="error" *ngIf="date.invalid && date.touched">
+          Please select a valid date.
+        </div>
+      </div>
+
+      <!-- Time Slot -->
+      <div class="form-group">
+        <i class="fa fa-clock"></i>
+        <select name="timeSlot" [(ngModel)]="booking.timeSlot" required (change)="updateAvailability()"
+          #timeSlot="ngModel">
+          <option value="" disabled [selected]="!booking.timeSlot">Select Time Slot</option>
+          <option value="6AM-8AM">6AM - 8AM</option>
+          <option value="8AM-10AM">8AM - 10AM</option>
+          <option value="5PM-7PM">5PM - 7PM</option>
+        </select>
+        <div class="error" *ngIf="timeSlot.invalid && timeSlot.touched">
+          Please select a time slot.
+        </div>
+      </div>
+
+      <!-- Number of People -->
+      <div class="form-group">
+        <i class="fa fa-users"></i>
+        <input type="number" name="numberOfPeople" [(ngModel)]="booking.noOfPeople" placeholder="No. of People"
+        min="1" max="10"  required #numberOfPeople="ngModel" />
+        <div class="error" *ngIf="numberOfPeople.invalid && numberOfPeople.touched">
+          You can book for up to 10 people at a time.
+        </div>
+      </div>
+<br>
+      <!-- Slot Info -->
+      <div class="form-group availability-info" *ngIf="slotInfo.total !== null">
+        <span style="color: #e67e22; font-weight: 500;">
+          Slots booked: {{ slotInfo.booked }} / {{ slotInfo.total }}
+        </span>
+        <span *ngIf="slotsLeft > 0" style="color: #27ae60;">
+          Only {{ slotsLeft }} Darshan slots left!
+        </span>
+        <span *ngIf="slotsLeft === 0" style="color: #c0392b;">
+          All slots are full for this time.
+        </span>
+      </div>
+
+      
+      <!-- Optional Donation -->
+      <div class="form-group">
+        <i class="fa fa-inr"></i>
+        <input type="number" name="donation" [(ngModel)]="booking.donation" min="0"
+          placeholder="Additional Donation Amount (Optional)" />
+      </div>
+
+      <!-- Notes -->
+      <div class="form-group">
+        <i class="fa fa-comment"></i>
+        <textarea name="notes" [(ngModel)]="booking.message" rows="3" placeholder="Any message (optional)"></textarea>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-submit">
+        <i class="fa fa-check-circle"></i> Book Prasad
+      </button>
+    </form>
+  </div>
+</div>

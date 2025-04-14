@@ -1,0 +1,161 @@
+/* Background */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('/assets/images/03.jpeg') no-repeat center center/cover;
+  }
+  
+  /* Dark Overlay */
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Donation Card */
+  .donation-card {
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 40px;
+    width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Title */
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e67e22;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Fields */
+  .input-group {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .input-group i {
+    margin-right: 10px;
+    color: #e67e22;
+  }
+  
+  .input-group input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  /* Payment Options */
+  .payment-options {
+    text-align: left;
+    margin: 15px 0;
+    font-size: 16px;
+  }
+  
+  .payment-methods {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  
+  .payment-methods input {
+    display: none;
+  }
+  
+  .payment-methods label {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+  }
+  
+  .payment-methods label i {
+    margin-right: 8px;
+    color: #e67e22;
+  }
+  
+  .payment-methods input:checked + label {
+    background: #e67e22;
+    color: white;
+    border: none;
+  }
+  
+  /* Donate Button */
+  .donate-btn {
+    background: linear-gradient(to right, #ff5733, #e67e22);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .donate-btn:hover {
+    background: linear-gradient(to right, #e74c3c, #d35400);
+  }
+  
+  /* Thank You */
+  .thank-you {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #555;
+    font-style: italic;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 450px) {
+    .donation-card {
+      width: 90%;
+    }
+  
+    .payment-methods {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  

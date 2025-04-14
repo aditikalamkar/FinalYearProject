@@ -1,0 +1,77 @@
+<div class="profile-container mt-4">
+  <!-- Profile Card -->
+  <div class="user-profile-card" *ngIf="userInfo">
+    <img src="assets/images/profile.jpeg" alt="Profile Image" class="user-profile-image" />
+    <h2>{{ userInfo.name }}</h2>
+    <p *ngIf="userInfo.email"><i class="icon">📧</i> {{ userInfo.email }}</p>
+    <p *ngIf="userInfo.mobile"><i class="icon">📱</i> +91-{{ userInfo.mobile }}</p>
+    <span class="user-status online">🟢 Active</span> &nbsp;&nbsp;
+    <span  class="btn-logout" (click)="confirmLogout()">🔴 Logout</span> 
+    
+  </div>
+
+  <!-- Booking History -->
+  <div class="user-booking-section mt-5">
+    <h3>🕒 Booking History</h3>
+  
+    <table class="user-booking-table table table-bordered table-striped mt-3" *ngIf="allBookings && allBookings.length > 0; else noBooking">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Time Slot</th>
+          <th>People</th>
+          <th>Donation</th>
+          <th>Pangat Amount</th>  <!-- New column -->
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of allBookings">
+          <td>{{ booking.date || '—' }}</td>
+          <td>
+            <span [ngClass]="{
+              'type-darshan': booking.type === 'Darshan',
+              'type-pangat': booking.type === 'Pangat',
+              'type-prasad': booking.type === 'Prasad'
+            }">{{ booking.type }}</span>
+          </td>
+          <td>{{ booking.timeSlot || '—' }}</td>
+          <td>{{ booking.numberOfPeople || 1 }}</td> <!-- Dynamic people -->
+  
+          <!-- Donation: Show only for Darshan/Prasad -->
+          <td>
+            <ng-container >
+              ₹{{ booking.donation }}
+            </ng-container>
+            <ng-template #noDonation>—</ng-template>
+          </td>
+  
+          <!-- Pangat Amount: Only if Pangat -->
+          <td>
+            <ng-container *ngIf="booking.type === 'Pangat'; else noPangat">
+              
+              ₹{{ booking.pangatAmount }}
+            </ng-container>
+            <ng-template #noPangat>—</ng-template>
+          </td>
+  
+          <td>
+            <div class="booking-actions">
+              <button class="btn-edit" (click)="editBooking(booking)">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button class="btn-delete" (click)="deleteBooking(booking)">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noBooking>
+      <p class="text-muted text-center mt-3">No booking history found.</p>
+    </ng-template>
+  </div>
+
