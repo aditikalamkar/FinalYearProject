@@ -13,14 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+
+//@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class AuthController {
 
     @Autowired
     private AuthService service;
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> register(@RequestBody Devotee devotee, HttpSession session) {
         Devotee saved = service.register(devotee);
         if (saved != null) {
@@ -31,7 +31,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<String> login(@RequestBody Devotee devotee, HttpSession session) {
         Devotee user = service.login(devotee.getEmail(), devotee.getPassword());
         if (user != null) {
@@ -42,19 +42,19 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/auth/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("Logged out successfully");
     }
 
 
-    @GetMapping("/is-authenticated")
+    @GetMapping("/auth/is-authenticated")
     public ResponseEntity<Boolean> isAuthenticated(HttpSession session) {
         return ResponseEntity.ok(session.getAttribute("user") != null);
     }
     
-    @GetMapping("/profile/info")
+    @GetMapping("/auth/profile/info")
     public ResponseEntity<?> getDevoteeInfo(HttpSession session) {
         Devotee user = (Devotee) session.getAttribute("user");
         if (user == null) {

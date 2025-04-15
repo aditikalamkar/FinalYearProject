@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/darshan")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+
+//@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class DarshanBookingController {
 
     @Autowired
     private DarshanService service;
 
     // ✅ Create booking (requires login)
-    @PostMapping("/book")
+    @PostMapping("/darshan/book")
     public ResponseEntity<?> createBooking(@RequestBody DarshanBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -35,13 +35,13 @@ public class DarshanBookingController {
     }
 
     // ✅ Get all bookings (public)
-    @GetMapping("/all")
+    @GetMapping("/darshan/all")
     public ResponseEntity<List<DarshanBooking>> getAllBookings() {
         return ResponseEntity.ok(service.getAllBookings());
     }
 
     // ✅ Update booking by ID (requires login)
-    @PutMapping("/update/{id}")
+    @PutMapping("/darshan/update/{id}")
     public ResponseEntity<?> updateBookingById(@PathVariable int id, @RequestBody DarshanBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -59,7 +59,7 @@ public class DarshanBookingController {
     }
 
     // ✅ Delete booking by ID (requires login)
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/darshan/delete/{id}")
     public ResponseEntity<?> deleteBookingById(@PathVariable int id, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -72,7 +72,7 @@ public class DarshanBookingController {
         return ResponseEntity.ok(Map.of("message", "Booking deleted successfully", "id", id));
     }
 
-    @GetMapping("/availability")
+    @GetMapping("/darshan/availability")
     public ResponseEntity<Map<String, Integer>> getSlotAvailability(
             @RequestParam String date,
             @RequestParam String timeSlot) {
@@ -90,7 +90,7 @@ public class DarshanBookingController {
 
 
     // ✅ Get bookings for logged-in user
-    @GetMapping("/my-bookings")
+    @GetMapping("/darshan/my-bookings")
     public ResponseEntity<?> getUserBookings(HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 

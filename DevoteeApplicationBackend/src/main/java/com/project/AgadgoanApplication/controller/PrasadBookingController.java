@@ -16,15 +16,15 @@ import com.project.AgadgoanApplication.services.PrasadService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/prasad")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+
+@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class PrasadBookingController {
 
     @Autowired
     private PrasadService service;
 
     // ✅ Create booking (requires login)
-    @PostMapping("/book")
+    @PostMapping("/prasad/book")
     public ResponseEntity<?> createBooking(@RequestBody PrasadBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -38,13 +38,13 @@ public class PrasadBookingController {
     }
 
     // ✅ Get all bookings (public)
-    @GetMapping("/all")
+    @GetMapping("/prasad/all")
     public ResponseEntity<List<PrasadBooking>> getAllBookings() {
         return ResponseEntity.ok(service.getAllBookings());
     }
 
     // ✅ Update booking by ID (requires login)
-    @PutMapping("/update/{id}")
+    @PutMapping("/prasad/update/{id}")
     public ResponseEntity<?> updateBookingById(@PathVariable int id, @RequestBody PrasadBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -62,7 +62,7 @@ public class PrasadBookingController {
     }
 
     // ✅ Delete booking by ID (requires login)
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/prasad/delete/{id}")
     public ResponseEntity<?> deleteBookingById(@PathVariable int id, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -76,7 +76,7 @@ public class PrasadBookingController {
     }
 
     // ✅ Check slot availability
-    @GetMapping("/availability")
+    @GetMapping("/prasad/availability")
     public ResponseEntity<Map<String, Integer>> getTotalBooked(
             @RequestParam String date,
             @RequestParam String timeSlot) {
@@ -93,7 +93,7 @@ public class PrasadBookingController {
     }
 
     // ✅ Get bookings for logged-in user
-    @GetMapping("/my-bookings")
+    @GetMapping("/prasad/my-bookings")
     public ResponseEntity<?> getUserBookings(HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 

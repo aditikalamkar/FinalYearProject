@@ -15,15 +15,14 @@ import com.project.AgadgoanApplication.services.PangatService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/pangat")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class PangatBookingController {
 
     @Autowired
     private PangatService service;
 
     // ✅ Create booking (requires login)
-    @PostMapping("/book")
+    @PostMapping("/pangat/book")
     public ResponseEntity<?> createBooking(@RequestBody PangatBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -37,13 +36,13 @@ public class PangatBookingController {
     }
 
     // ✅ Get all bookings (public)
-    @GetMapping("/all")
+    @GetMapping("/pangat/all")
     public ResponseEntity<List<PangatBooking>> getAllBookings() {
         return ResponseEntity.ok(service.getAllBookings());
     }
 
     // ✅ Update booking by ID (requires login)
-    @PutMapping("/update/{id}")
+    @PutMapping("/pangat/update/{id}")
     public ResponseEntity<?> updateBookingById(@PathVariable int id, @RequestBody PangatBooking booking, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -61,7 +60,7 @@ public class PangatBookingController {
     }
 
     // ✅ Delete booking by ID (requires login)
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/pangat/delete/{id}")
     public ResponseEntity<?> deleteBookingById(@PathVariable int id, HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
@@ -75,7 +74,7 @@ public class PangatBookingController {
     }
 
     // ✅ Check slot availability
-    @GetMapping("/availability")
+    @GetMapping("/pangat/availability")
     public ResponseEntity<Map<String, Object>> getSlotAvailability(
             @RequestParam String date,
             @RequestParam String timeSlot) {
@@ -83,7 +82,7 @@ public class PangatBookingController {
     }
 
     // ✅ Get bookings for logged-in user
-    @GetMapping("/my-bookings")
+    @GetMapping("/pangats/my-bookings")
     public ResponseEntity<?> getUserBookings(HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 

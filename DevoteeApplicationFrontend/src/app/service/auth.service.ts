@@ -13,13 +13,13 @@ interface Devotee {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8081/auth'; // Backend URL
+  private baseUrl = 'http://localhost:8081'; // Backend URL
 
   constructor(private http: HttpClient) {}
 
   // Register a new user
   register(devotee: Devotee): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, devotee, {
+    return this.http.post(`${this.baseUrl}/auth/register`, devotee, {
       withCredentials: true,
       
     });
@@ -29,7 +29,7 @@ export class AuthService {
 
   // Login
   login(devotee: Devotee): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, devotee, {
+    return this.http.post(`${this.baseUrl}/auth/login`, devotee, {
       withCredentials: true,
       responseType: 'text' // Since backend returns plain text
     });
@@ -37,7 +37,7 @@ export class AuthService {
 
   // Logout
   logout(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/logout`, {
+    return this.http.get(`${this.baseUrl}/auth/logout`, {
       withCredentials: true,
       responseType: 'text' // Optional, if backend sends plain text
     });
@@ -45,7 +45,7 @@ export class AuthService {
 
   // Check if user is logged in
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/is-authenticated`, {
+    return this.http.get(`${this.baseUrl}/auth/is-authenticated`, {
       withCredentials: true
     });
   }
