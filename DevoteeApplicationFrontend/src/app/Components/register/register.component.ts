@@ -29,7 +29,7 @@ export class RegisterComponent {
       this.authService.register(this.registerForm).subscribe({
         next: (res: any) => {
           Swal.fire('Success', res?.message || 'Registered successfully!', 'success').then(() => {
-            window.location.href = '/home';
+            window.location.href = '';
           });
         },
         error: (err: any) => {

@@ -32,7 +32,7 @@ export class LoginComponent {
             confirmButtonColor: '#e67e22'
           }).then(() => {
             // Hard redirect to /home and refresh the page
-            window.location.href = '/home';
+            window.location.href = '';
           });
         },
         error: () => {

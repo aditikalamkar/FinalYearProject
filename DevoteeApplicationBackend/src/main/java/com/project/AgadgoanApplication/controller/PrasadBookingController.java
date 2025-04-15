@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 
-@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
+//@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class PrasadBookingController {
 
     @Autowired

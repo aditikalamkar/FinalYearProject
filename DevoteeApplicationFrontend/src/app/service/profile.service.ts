@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  private baseUrl = 'http://localhost:8081';
+  private baseUrl = environment.apiUrl;
+  // 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 

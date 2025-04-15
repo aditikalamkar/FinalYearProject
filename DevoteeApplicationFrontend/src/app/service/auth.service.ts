@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 interface Devotee {
   name?: string;
@@ -13,7 +14,7 @@ interface Devotee {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8081'; // Backend URL
+  private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
 
   constructor(private http: HttpClient) {}
 

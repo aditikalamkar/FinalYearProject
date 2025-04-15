@@ -122,7 +122,7 @@ export class ProfileComponent implements OnInit {
             timer: 1500,
             showConfirmButton: false
           });
-          window.location.href = '/home';
+          window.location.href = '';
         });
       }
     });

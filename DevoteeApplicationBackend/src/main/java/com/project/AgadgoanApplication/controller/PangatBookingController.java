@@ -15,7 +15,7 @@ import com.project.AgadgoanApplication.services.PangatService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
+//@CrossOrigin(origins = " \"http://localhost:4200\", \"http://3.80.55.195\"", allowCredentials = "true")
 public class PangatBookingController {
 
     @Autowired
@@ -82,7 +82,7 @@ public class PangatBookingController {
     }
 
     // ✅ Get bookings for logged-in user
-    @GetMapping("/pangats/my-bookings")
+    @GetMapping("/pangat/my-bookings")
     public ResponseEntity<?> getUserBookings(HttpSession session) {
         Devotee currentUser = (Devotee) session.getAttribute("user");
 
