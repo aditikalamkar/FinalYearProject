@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Spring Boot App') {
             steps {
-                dir('backend') {
+                dir('DevoteeApplicationBackend') {
                     sh 'mvn clean package -DskipTests'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build Angular App') {
             steps {
-                dir('frontend') {
+                dir('DevoteeApplicationFrontend') {
                     sh 'npm install'
                     sh 'npm run build --configuration=production'
                 }
@@ -40,11 +40,11 @@ pipeline {
             steps {
                 sh '''
                     echo "🚀 Deploying Spring Boot backend..."
-                    cp backend/target/${SPRING_JAR_NAME} ${DEPLOY_BACKEND_DIR}
+                    cp DevoteeApplicationBackend/target/${SPRING_JAR_NAME} ${DEPLOY_BACKEND_DIR}
 
                     echo "🌐 Deploying Angular frontend..."
                     rm -rf ${DEPLOY_FRONTEND_DIR}/*
-                    cp -r frontend/dist/frontend/* ${DEPLOY_FRONTEND_DIR}
+                    cp -r DevoteeApplicationFrontend/dist/devotee-app/* ${DEPLOY_FRONTEND_DIR}
 
                     echo "🔁 Restarting backend with PM2..."
                     pm2 delete spring-app || true
