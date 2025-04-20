@@ -30,8 +30,11 @@ pipeline {
         stage('Build Angular App') {
             steps {
                 dir('devotee-app') {  // Corrected folder path for Angular
-                    sh 'npm install'
-                    sh 'npm run build --configuration=production'
+                    // Debugging steps
+                    sh 'echo "📁 Current Dir: $(pwd)"'  // Show the current working directory
+                    sh 'ls -la'  // List files to verify angular.json is present
+                    sh 'npm install'  // Install dependencies
+                    sh 'npm run build --configuration=production'  // Build Angular app
                 }
             }
         }
