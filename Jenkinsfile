@@ -14,8 +14,6 @@ pipeline {
         PEM_PATH              = 'C:/JenkinsKeys/DevoteeAgadgoanApplication.pem'
         BACKEND_DIR_WINDOWS   = 'D:/AgadgoanApplication/DevoteeApplicationBackend'
         FRONTEND_DIR_WINDOWS  = 'D:/AgadgoanApplication/DevoteeApplicationFrontend'
-        SCP_PATH              = 'C:/Program Files/Git/usr/bin/scp.exe'
-        SSH_PATH              = 'C:/Program Files/Git/usr/bin/ssh.exe'
     }
 
     stages {
@@ -50,13 +48,13 @@ pipeline {
 
                     bat """
                         echo 🔄 Copying Spring Boot JAR to EC2...
-                        "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
+                        scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
 
                         echo 🌐 Copying Angular files to EC2...
-                        "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
+                        scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
 
                         echo 🚀 Restarting Spring Boot App on EC2...
-                        "${env.SSH_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
+                        ssh -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^ 
                         "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > /home/ec2-user/spring.log 2>&1 &"
 
                         echo ✅ Deployment completed successfully.
