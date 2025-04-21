@@ -47,27 +47,19 @@ pipeline {
                     def jarPath = "${env.BACKEND_DIR_WINDOWS}\\target\\${env.SPRING_JAR_NAME}"
                     def angularDistPath = "${env.FRONTEND_DIR_WINDOWS}\\dist\\devotee-app\\*"
 
-                    // Copy Spring Boot JAR to EC2
                     bat """
-                        echo 🚀 Copying Spring Boot JAR to EC2...
+                        echo Deploying Spring Boot JAR to EC2...
                         scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
-                    """
 
-                    // Copy Angular files to EC2
-                    bat """
-                        echo 🌐 Copying Angular files to EC2...
+                        echo Deploying Angular app to EC2...
                         scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
-                    """
 
-                    // Restart Spring Boot App
-                    bat """
-                        echo 🔁 Restarting Spring Boot App...
+                        echo Restarting Spring Boot Application on EC2...
                         ssh -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
                             "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
-                    """
 
-                    // Deployment completion message
-                    echo '✅ Deployment to EC2 completed!'
+                        echo ✅ Deployment complete!
+                    """
                 }
             }
         }
