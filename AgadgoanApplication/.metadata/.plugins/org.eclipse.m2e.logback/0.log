@@ -2104,3 +2104,15 @@ java.io.FileNotFoundException: D:\AgadgoanApplication\AgadgoanApplication\.metad
 	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:555)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
 2025-04-21 21:12:24,868 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-04-21 21:16:48,844 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2025-04-21 21:17:16,505 [Worker-6: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.project:AgadgoanApplication:0.0.1-SNAPSHOT @ D:\AgadgoanApplication\DevoteeApplicationBackend\pom.xml.
+2025-04-21 21:17:23,699 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AgadgoanApplication/src/main/java
+2025-04-21 21:17:23,706 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /AgadgoanApplication/src/main/resources
+2025-04-21 21:17:23,708 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /AgadgoanApplication/src/main/resources
+2025-04-21 21:17:23,710 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AgadgoanApplication/src/test/java
+2025-04-21 21:17:23,712 [Worker-6: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /AgadgoanApplication/src/test/resources
+2025-04-21 21:17:26,615 [Worker-6: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 13 sec
+2025-04-21 21:17:27,521 [Worker-8: Auto share git projects] WARN  org.eclipse.jgit.util.FS_Win32 - null
+2025-04-21 21:17:33,224 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-04-21 21:17:33,317 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-04-21 21:17:33,335 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory D:\AgadgoanApplication\DevoteeApplicationBackend\src\test\resources
