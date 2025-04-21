@@ -20,13 +20,13 @@ pipeline {
 
     stages {
 
-        stage('📦 Clone Repository') {
+        stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/aditikalamkar/FinalYearProject.git'
             }
         }
 
-        stage('🔧 Build Spring Boot App') {
+        stage('Build Spring Boot App') {
             steps {
                 dir("${env.BACKEND_DIR_WINDOWS}") {
                     bat 'mvn clean package -DskipTests'
@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('🛠️ Build Angular App') {
+        stage('Build Angular App') {
             steps {
                 dir("${env.FRONTEND_DIR_WINDOWS}") {
                     bat 'npm install'
@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('🚀 Deploy to EC2') {
+        stage('Deploy to EC2') {
             steps {
                 script {
                     def jarPath = "${env.BACKEND_DIR_WINDOWS}\\target\\${env.SPRING_JAR_NAME}"
@@ -60,7 +60,7 @@ pipeline {
                         "${env.SSH_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
                         "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
 
-                        echo ✅ Deployment completed successfully.
+                        echo Deployment completed successfully.
                     """
                 }
             }
@@ -69,10 +69,10 @@ pipeline {
 
     post {
         success {
-            echo '🎉 CI/CD Pipeline completed successfully!'
+            echo 'CI/CD Pipeline completed successfully.'
         }
         failure {
-            echo '❌ CI/CD Pipeline failed.'
+            echo 'CI/CD Pipeline failed.'
         }
     }
 }
