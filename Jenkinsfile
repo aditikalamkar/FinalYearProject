@@ -19,6 +19,7 @@ pipeline {
     }
 
     stages {
+
         stage('📦 Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/aditikalamkar/FinalYearProject.git'
@@ -42,9 +43,10 @@ pipeline {
             }
         }
 
-        stage('🔐 Fix PEM Permissions on Windows') {
+        stage('🔐 Fix PEM Permissions') {
             steps {
                 bat """
+                    echo Setting correct permissions on PEM file...
                     icacls "${env.PEM_PATH}" /inheritance:r
                     icacls "${env.PEM_PATH}" /grant:r "%USERNAME%:R"
                 """
@@ -58,17 +60,17 @@ pipeline {
                     def angularDistPath = "${env.FRONTEND_DIR_WINDOWS}\\dist\\devotee-app\\*"
 
                     bat """
-                        echo 🚀 Copying Spring Boot JAR to EC2...
+                        echo Copying Spring Boot JAR to EC2...
                         "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
 
-                        echo 🌐 Copying Angular files to EC2...
+                        echo Copying Angular files to EC2...
                         "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
 
-                        echo 🔁 Restarting Spring Boot App...
+                        echo Restarting Spring Boot App on EC2...
                         "${env.SSH_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
-                            "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
+                        "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
 
-                        echo ✅ Deployment to EC2 completed!
+                        echo ✅ Deployment completed successfully.
                     """
                 }
             }
