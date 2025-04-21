@@ -47,18 +47,22 @@ pipeline {
                     def angularDistPath = "${env.FRONTEND_DIR_WINDOWS}/dist/devotee-app/*"
 
                     bat """
-                        echo 🔄 Copying Spring Boot JAR to EC2...
+                        echo Copying Spring Boot JAR to EC2...
                         scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
-
-                        echo 🌐 Copying Angular files to EC2...
-                        scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
-
-                        echo 🚀 Restarting Spring Boot App on EC2...
-                        ssh -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^ 
-                        "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > /home/ec2-user/spring.log 2>&1 &"
-
-                        echo ✅ Deployment completed successfully.
                     """
+
+                    bat """
+                        echo Copying Angular files to EC2...
+                        scp -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r "${angularDistPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
+                    """
+
+                    bat """
+                        echo Restarting Spring Boot App on EC2...
+                        ssh -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
+                        "pkill -f java -jar || exit 0 && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
+                    """
+
+                    bat 'echo Deployment completed successfully.'
                 }
             }
         }
