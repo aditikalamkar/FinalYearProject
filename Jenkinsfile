@@ -11,7 +11,7 @@ pipeline {
         DEPLOY_BACKEND_DIR    = '/home/ec2-user/'
         DEPLOY_FRONTEND_DIR   = '/usr/share/nginx/html/'
         EC2_IP                = '52.91.88.239'
-        PEM_PATH              = 'C:\\Users\\Admin\\Downloads\\DevoteeAgadgoanApplication.pem'
+        PEM_PATH              = 'C:\\JenkinsKeys\\DevoteeAgadgoanApplication.pem'
         BACKEND_DIR_WINDOWS   = 'D:\\AgadgoanApplication\\DevoteeApplicationBackend'
         FRONTEND_DIR_WINDOWS  = 'D:\\AgadgoanApplication\\DevoteeApplicationFrontend'
         SCP_PATH              = 'C:\\Program Files\\Git\\usr\\bin\\scp.exe'
@@ -40,16 +40,6 @@ pipeline {
                     bat 'npm install'
                     bat 'npm run build --configuration=production'
                 }
-            }
-        }
-
-        stage('🔐 Fix PEM Permissions') {
-            steps {
-                bat """
-                    echo Setting correct permissions on PEM file...
-                    icacls "${env.PEM_PATH}" /inheritance:r
-                    icacls "${env.PEM_PATH}" /grant:r "%USERNAME%:R"
-                """
             }
         }
 
