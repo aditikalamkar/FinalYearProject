@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.1'  
+        maven 'Maven 3.9.9'  
         nodejs 'Node 18'      
     }
 
@@ -21,50 +21,48 @@ pipeline {
 
         stage('Build Spring Boot App') {
             steps {
-                dir('D:/AgadgoanApplication/DevoteeApplicationBackend') {  // Corrected folder path for Spring Boot
-                    sh 'mvn clean package -DskipTests'
+                dir('D:\\AgadgoanApplication\\DevoteeApplicationBackend') {
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
 
         stage('Build Angular App') {
             steps {
-                dir('D:/AgadgoanApplication/DevoteeApplicationBackend') { // Corrected folder path for Angular
-                    // Debugging steps
-                    sh 'echo "📁 Current Dir: $(pwd)"'  // Show the current working directory
-                    sh 'ls -la'  // List files to verify angular.json is present
-                    sh 'npm install'  // Install dependencies
-                    sh 'npm run build --configuration=production'  // Build Angular app
+                dir('D:\\AgadgoanApplication\\DevoteeApplicationFrontend') {
+                    bat 'echo 📁 Current Dir: %cd%'
+                    bat 'dir'
+                    bat 'npm install'
+                    bat 'npm run build --configuration=production'
                 }
             }
         }
 
-        stage('Deploy to EC2') {
-            steps {
-                sh '''
-                    echo "🚀 Deploying Spring Boot backend..."
-                    cp DevoteeApplication/target/${SPRING_JAR_NAME} ${DEPLOY_BACKEND_DIR}
+stage('Deploy to EC2') {
+    steps {
+        sh '''
+            echo "🚀 Deploying Spring Boot JAR to EC2..."
+            scp -i ~/Downloads/DevoteeAgadgoanApplication.pem D:/AgadgoanApplication/DevoteeApplicationBackend/target/AgadgoanApplication-0.0.1-SNAPSHOT.jar ec2-user@52.91.88.239:/home/ec2-user/
 
-                    echo "🌐 Deploying Angular frontend..."
-                    rm -rf ${DEPLOY_FRONTEND_DIR}/*
-                    cp -r devotee-app/dist/devotee-app/* ${DEPLOY_FRONTEND_DIR}
+            echo "🌐 Deploying Angular build to EC2..."
+            scp -i ~/Downloads/DevoteeAgadgoanApplication.pem -r D:/AgadgoanApplication/DevoteeApplicationFrontend/dist/devotee-app/* ec2-user@52.91.88.239:/usr/share/nginx/html/
 
-                    echo "🔁 Restarting backend with PM2..."
-                    pm2 delete spring-app || true
-                    pm2 start "java -jar ${DEPLOY_BACKEND_DIR}${SPRING_JAR_NAME}" --name spring-app
+            echo "🔁 Restarting backend app remotely..."
+            ssh -i ~/Downloads/DevoteeAgadgoanApplication.pem ec2-user@52.91.88.239 "pkill -f 'java -jar' || true && nohup java -jar /home/ec2-user/AgadgoanApplication-0.0.1-SNAPSHOT.jar > spring.log 2>&1 &"
 
-                    echo "✅ Frontend deployed to NGINX at ${DEPLOY_FRONTEND_DIR}"
-                '''
-            }
-        }
+            echo "✅ Deployment to EC2 complete!"
+        '''
+    }
+}
+
     }
 
     post {
         success {
-            echo '🎉 CI/CD Deployment Successful!'
+            echo '🎉 CI/CD Pipeline on Windows completed!'
         }
         failure {
-            echo '❌ CI/CD Pipeline Failed.'
+            echo '❌ Pipeline failed on Windows.'
         }
     }
 }
