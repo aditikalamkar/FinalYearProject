@@ -3,6 +3,8 @@ package com.project.AgadgoanApplication.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project.AgadgoanApplication.model.DarshanBooking;
@@ -19,7 +21,9 @@ public interface DarshanRepository extends JpaRepository<DarshanBooking, Integer
 
     // Get all bookings for a particular devotee
     List<DarshanBooking> findByDevotee(Devotee devotee);
+    
+    @Query("SELECT SUM(d.noOfPeople) FROM DarshanBooking d WHERE d.date = :date AND d.timeSlot = :timeSlot")
+    Integer countPeopleByDateAndTimeSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
 
-    // Count bookings on a given date and time slot — useful for checking capacity
-    int countByDateAndTimeSlot(String date, String timeSlot);
+   
 }

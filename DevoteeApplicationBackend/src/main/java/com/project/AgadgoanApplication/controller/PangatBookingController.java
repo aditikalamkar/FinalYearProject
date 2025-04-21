@@ -81,6 +81,7 @@ public class PangatBookingController {
         return ResponseEntity.ok(service.getSlotAvailability(date, timeSlot));
     }
 
+
     // ✅ Get bookings for logged-in user
     @GetMapping("/pangat/my-bookings")
     public ResponseEntity<?> getUserBookings(HttpSession session) {

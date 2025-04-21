@@ -14,16 +14,10 @@ import com.project.AgadgoanApplication.model.Devotee;
 
 @Service
 public class DarshanServiceImpl implements DarshanService {
-
+	
     @Autowired
     private DarshanRepository repo;
-
-    @Override
-    public DarshanBooking saveBooking(DarshanBooking booking, Devotee devotee) {
-        booking.setDevotee(devotee);
-        return repo.save(booking);
-    }
-
+   
     @Override
     public List<DarshanBooking> getAllBookings() {
         return repo.findAll();
@@ -53,31 +47,20 @@ public class DarshanServiceImpl implements DarshanService {
         }
     }
 
-    @Override
-    public Map<String, Object> getSlotAvailability(String date, String timeSlot) {
-        int totalSlots = 150; // Customize as needed
-        int booked = repo.countByDateAndTimeSlot(date, timeSlot);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("total", totalSlots);
-        result.put("booked", booked);
-        result.put("available", totalSlots - booked);
-
-        return result;
-    }
+    
 
     @Override
     public List<DarshanBooking> getBookingsByDevotee(Devotee devotee) {
         return repo.findByDevotee(devotee);
     }
 
-    @Override
-    public int getTotalBookedSeats(String date, String timeSlot) {
-        List<DarshanBooking> bookings = repo.findByDateAndTimeSlot(date, timeSlot);
-        return bookings.stream()
-                .mapToInt(DarshanBooking::getNoOfPeople)
-                .sum();
+	@Override
+	public DarshanBooking saveBooking(DarshanBooking booking, Devotee devotee) {
+		 booking.setDevotee(devotee);
+	        return repo.save(booking);
+	}
 
-    }
+	
     
 }

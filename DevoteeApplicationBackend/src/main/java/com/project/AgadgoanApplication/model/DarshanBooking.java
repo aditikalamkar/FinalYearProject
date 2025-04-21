@@ -15,6 +15,7 @@ public class DarshanBooking {
 
 	    private String date;
 	    private String timeSlot;
+	    
 	    private int noOfPeople;
 
 	    @Column(nullable = true) // Message is optional

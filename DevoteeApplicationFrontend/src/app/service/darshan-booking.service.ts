@@ -2,14 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { DarshanBookingComponent } from '../Components/darshan-booking/darshan-booking.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DarshanBookingService {
 
-  private BASE_URL = environment.apiUrl; 
-  // 'http://localhost:8081';
+  // private BASE_URL = environment.apiUrl; 
+  private BASE_URL ='http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 
@@ -34,25 +35,15 @@ export class DarshanBookingService {
     return this.http.delete(`${this.BASE_URL}/darshan/delete/${id}`, { withCredentials: true });
   }
 
-  // Get slot availability by date and timeSlot
-  getSlotAvailability(date: string, timeSlot: string): Observable<{ booked: number; total: number; available: number }> {
-    const params = new HttpParams().set('date', date).set('timeSlot', timeSlot);
-    return this.http.get<{ booked: number; total: number; available: number }>(
-      `${this.BASE_URL}/darshan/availability`, { params }
-    );
-  }
-
-  checkAvailability(date: string, timeSlot: string): Observable<any> {
-    const params = new HttpParams()
-      .set('date', date)
-      .set('timeSlot', timeSlot);
-
-    return this.http.get<any>(`${this.BASE_URL}/darshan/availability`, { params });
-  }
-  
-
   getMyBookings() {
     return this.http.get(`${this.BASE_URL}/darshan/my-bookings`, { withCredentials: true });
   }
 
+  getDarshanSlotAvailability(date: string, timeSlot: string): Observable<any> {
+    const params = new HttpParams()
+      .set('date', date)
+      .set('timeSlot', timeSlot);
+
+    return this.http.get(`${this.BASE_URL}/darshan/availability`, { params });
+  }
 }

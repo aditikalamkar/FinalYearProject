@@ -15,45 +15,44 @@ export class DarshanBookingComponent {
     timeSlot: '',
     numberOfPeople: 0,
     message: '',
-    donation: null,  // Optional donation
+    donation: null,
   };
 
   today = new Date().toISOString().split('T')[0];
 
-  slotInfo = {
-    booked: 0,
-    total: null
-  };
+  slotAvailability: {
+    total: number;
+    bookedSlots: number;
+    availableSlots: number;
+  } | null = null;
 
   constructor(
     private service: DarshanBookingService,
     private router: Router
   ) {}
 
-  // Calculates available slots
-  get slotsLeft() {
-    return this.slotInfo.total !== null
-      ? this.slotInfo.total - this.slotInfo.booked
-      : 0;
-  }
+  checkAvailability() {
+    if (!this.booking.date || !this.booking.timeSlot) {
+      alert('Please select both date and time slot.');
+      return;
+    }
 
-  // Fetch updated slot availability when date or time slot changes
-  updateAvailability() {
-    const { date, timeSlot } = this.booking;
-    if (date && timeSlot) {
-      this.service.getSlotAvailability(date, timeSlot).subscribe({
-        next: (res: any) => {
-          this.slotInfo.booked = res.booked;
-          this.slotInfo.total = res.total;
+    this.service.getDarshanSlotAvailability(this.booking.date, this.booking.timeSlot)
+      .subscribe({
+        next: (data) => {
+          this.slotAvailability = {
+            total: data.totalSlots,
+            bookedSlots: data.bookedSlots,
+            availableSlots: data.availableSlots
+          };
         },
-        error: () => {
-          this.slotInfo = { booked: 0, total: null };
+        error: (err) => {
+          console.error(err);
+          alert('Failed to fetch slot availability.');
         }
       });
-    }
   }
 
-  // Submit booking form
   submitForm(form: any) {
     if (form.valid) {
       this.service.createBooking(this.booking).subscribe({
@@ -64,11 +63,9 @@ export class DarshanBookingComponent {
             text: 'Your darshan has been successfully booked.',
             confirmButtonColor: '#e67e22'
           }).then(() => {
-            this.router.navigate(['/profile']); // Navigate post-booking
+            this.router.navigate(['/profile']);
           });
-
           form.resetForm();
-          this.slotInfo = { booked: 0, total: null };
         },
         error: () => {
           Swal.fire({

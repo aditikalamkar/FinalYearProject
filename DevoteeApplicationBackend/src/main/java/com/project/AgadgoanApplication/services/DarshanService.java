@@ -12,7 +12,9 @@ public interface DarshanService {
     List<DarshanBooking> getAllBookings();
     DarshanBooking updateBookingById(int id, DarshanBooking updatedBooking);
     void deleteBookingById(int id);
-    Map<String, Object> getSlotAvailability(String date, String timeSlot);
     List<DarshanBooking> getBookingsByDevotee(Devotee devotee);
-	int getTotalBookedSeats(String date, String timeSlot);
+   
+
+
+
 }

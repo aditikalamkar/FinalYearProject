@@ -72,21 +72,6 @@ public class DarshanBookingController {
         return ResponseEntity.ok(Map.of("message", "Booking deleted successfully", "id", id));
     }
 
-    @GetMapping("/darshan/availability")
-    public ResponseEntity<Map<String, Integer>> getSlotAvailability(
-            @RequestParam String date,
-            @RequestParam String timeSlot) {
-
-        int total = 1500;
-        int booked = service.getTotalBookedSeats(date, timeSlot);
-
-        Map<String, Integer> response = new HashMap<>();
-        response.put("booked", booked);
-        response.put("total", total);
-        response.put("available", total - booked);
-
-        return ResponseEntity.ok(response);
-    }
 
 
     // ✅ Get bookings for logged-in user

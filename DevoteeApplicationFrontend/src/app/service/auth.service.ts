@@ -14,8 +14,10 @@ interface Devotee {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
+  
+  // private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
 
+  private baseUrl = 'http://localhost:8081';
   constructor(private http: HttpClient) {}
 
   // Register a new user
@@ -49,5 +51,16 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/auth/is-authenticated`, {
       withCredentials: true
     });
+  }
+  isLoggedIn(): boolean {
+    // Check if token exists and isn't expired
+    const token = localStorage.getItem('authToken');
+    return !!token; // Add proper token validation if needed
+  }
+
+  clearSession(): void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userInfo');
+    // Clear any other session data
   }
 }

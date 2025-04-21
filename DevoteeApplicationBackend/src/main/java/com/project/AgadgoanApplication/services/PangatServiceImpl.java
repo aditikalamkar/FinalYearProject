@@ -57,13 +57,15 @@ public class PangatServiceImpl implements PangatService {
 
     @Override
     public Map<String, Object> getSlotAvailability(String date, String timeSlot) {
-        int totalSlots = 90;
-        int booked = repo.countByDateAndTimeSlot(date, timeSlot);
+        int totalSlots = 20; // Max people per slot
+        Integer bookedPeople = repo.sumNoOfPeopleByDateAndTimeSlot(date, timeSlot);
+        int booked = (bookedPeople != null) ? bookedPeople : 0;
+        int available = totalSlots - booked;
 
         Map<String, Object> result = new HashMap<>();
         result.put("total", totalSlots);
         result.put("booked", booked);
-        result.put("available", totalSlots - booked);
+        result.put("available", Math.max(available, 0));
 
         return result;
     }

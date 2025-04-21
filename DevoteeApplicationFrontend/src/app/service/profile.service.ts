@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -8,17 +8,24 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class ProfileService {
 
-  private baseUrl = environment.apiUrl;
-  // 'http://localhost:8081';
+  // private baseUrl = environment.apiUrl;
+  private baseUrl = 'http://localhost:8081';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUserInfo(): Observable<any> {
     return this.http.get(`${this.baseUrl}/auth/is-authenticated`, { withCredentials: true });
   }
 
   getDevoteeDetails(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/auth/profile/info`, { withCredentials: true });
+    return this.http.get(`${this.baseUrl}/auth/profile/info`, {
+      withCredentials: true
+    }).pipe(
+      catchError((err: any) => {
+        // Handle specific errors if needed
+        return throwError(() => err);
+      })
+    );
   }
 
   getDarshanBookings(): Observable<any> {
@@ -33,7 +40,7 @@ export class ProfileService {
   getPrasadBookings(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/prasad/my-bookings`, { withCredentials: true });
   }
-  
+
   deleteBooking(booking: { id: number; type: string }): Observable<any> {
     let url = '';
     switch (booking.type) {

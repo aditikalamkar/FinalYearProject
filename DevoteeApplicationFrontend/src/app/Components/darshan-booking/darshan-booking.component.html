@@ -5,12 +5,10 @@
 
     <form #form="ngForm" (ngSubmit)="submitForm(form)" novalidate>
 
-
-
       <!-- Date -->
       <div class="form-group">
         <i class="fa fa-calendar"></i>
-        <input type="date" name="date" [(ngModel)]="booking.date" [min]="today" required (change)="updateAvailability()"
+        <input type="date" name="date" [(ngModel)]="booking.date" [min]="today" required (change)="checkAvailability()"
           #date="ngModel" />
         <div class="error" *ngIf="date.invalid && date.touched">
           Please select a valid date.
@@ -20,7 +18,7 @@
       <!-- Time Slot -->
       <div class="form-group">
         <i class="fa fa-clock"></i>
-        <select name="timeSlot" [(ngModel)]="booking.timeSlot" required (change)="updateAvailability()"
+        <select name="timeSlot" [(ngModel)]="booking.timeSlot" required (change)="checkAvailability()"
           #timeSlot="ngModel">
           <option value="" disabled [selected]="!booking.timeSlot">Select Time Slot</option>
           <option value="6AM-8AM">6AM - 8AM</option>
@@ -41,20 +39,23 @@
           You can book for up to 10 people at a time.
         </div>
       </div>
-      <br>
+
+      <br />
+
       <!-- Slot Info -->
-      <div class="form-group availability-info" *ngIf="slotInfo.total !== null">
+      <div class="form-group availability-info" *ngIf="slotAvailability">
         <span style="color: #e67e22; font-weight: 500;">
-          Slots booked: {{ slotInfo.booked }} / {{ slotInfo.total }}
+          Slots booked: {{ slotAvailability.bookedSlots }} / {{ slotAvailability.total }}
         </span>
-        <span *ngIf="slotsLeft > 0" style="color: #27ae60;">
-          Only {{ slotsLeft }} Darshan slots left!
+
+        <span *ngIf="slotAvailability.availableSlots > 0" style="color: #27ae60;">
+          Only {{ slotAvailability.availableSlots }} Darshan slots left!
         </span>
-        <span *ngIf="slotsLeft === 0" style="color: #c0392b;">
+
+        <span *ngIf="slotAvailability.availableSlots === 0" style="color: #c0392b;">
           All slots are full for this time.
         </span>
       </div>
-
 
       <!-- Optional Donation -->
       <div class="form-group">
@@ -62,15 +63,15 @@
         <input type="number" name="donation" [(ngModel)]="booking.donation" min="0"
           placeholder="Additional Donation Amount (Optional)" />
       </div>
+
       <!-- Notes -->
       <div class="form-group">
         <i class="fa fa-comment"></i>
         <textarea name="notes" [(ngModel)]="booking.message" rows="3" placeholder="Any message (optional)"></textarea>
       </div>
 
-
       <!-- Submit -->
-      <button type="submit" class="btn-submit">
+      <button type="submit" class="btn-submit" [disabled]="slotAvailability && slotAvailability.availableSlots === 0">
         <i class="fa fa-check-circle"></i> Book Darshan
       </button>
 

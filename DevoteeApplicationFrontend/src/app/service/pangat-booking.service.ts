@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class PangatBookingService {
 
-  private BASE_URL =environment.apiUrl;
-  //  'http://localhost:8081';
+  // private BASE_URL =environment.apiUrl;
+  private BASE_URL ='http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 
@@ -34,12 +34,8 @@ export class PangatBookingService {
   }
 
     // Get slot availability by date and timeSlot
-    getSlotAvailability(date: string, timeSlot: string): Observable<{ booked: number; total: number; available: number }> {
-      const params = new HttpParams().set('date', date).set('timeSlot', timeSlot);
-      return this.http.get<{ booked: number; total: number; available: number }>(
-        `${this.BASE_URL}/pangat/availability`,
-        { params }
-      );
+    getSlotAvailability(date: string, timeSlot: string): Observable<any> {
+      return this.http.get<any>(`${this.BASE_URL}?date=${date}&timeSlot=${timeSlot}`);
     }
     
 }
