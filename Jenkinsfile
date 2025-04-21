@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'maven'          // Pre-configured Maven in Jenkins
-        nodejs 'Node 18'       // Pre-configured NodeJS in Jenkins
+        maven 'maven'
+        nodejs 'Node 18'
     }
 
     environment {
@@ -11,9 +11,11 @@ pipeline {
         DEPLOY_BACKEND_DIR    = '/home/ec2-user/'
         DEPLOY_FRONTEND_DIR   = '/usr/share/nginx/html/'
         EC2_IP                = '52.91.88.239'
-        PEM_PATH              = '~/Downloads/DevoteeAgadgoanApplication.pem'
+        PEM_PATH              = 'C:\\Users\\YourUser\\Downloads\\DevoteeAgadgoanApplication.pem'
         BACKEND_DIR_WINDOWS   = 'D:\\AgadgoanApplication\\DevoteeApplicationBackend'
         FRONTEND_DIR_WINDOWS  = 'D:\\AgadgoanApplication\\DevoteeApplicationFrontend'
+        SCP_PATH              = 'C:\\Program Files\\Git\\usr\\bin\\scp.exe'
+        SSH_PATH              = 'C:\\Program Files\\Git\\usr\\bin\\ssh.exe'
     }
 
     stages {
@@ -26,7 +28,7 @@ pipeline {
 
         stage('🔧 Build Spring Boot App') {
             steps {
-                dir("${BACKEND_DIR_WINDOWS}") {
+                dir("${env.BACKEND_DIR_WINDOWS}") {
                     bat 'mvn clean package -DskipTests'
                 }
             }
@@ -34,9 +36,7 @@ pipeline {
 
         stage('🛠️ Build Angular App') {
             steps {
-                dir("${FRONTEND_DIR_WINDOWS}") {
-                    bat 'echo 📁 Current Dir: %cd%'
-                    bat 'dir'
+                dir("${env.FRONTEND_DIR_WINDOWS}") {
                     bat 'npm install'
                     bat 'npm run build --configuration=production'
                 }
@@ -45,31 +45,34 @@ pipeline {
 
         stage('🚀 Deploy to EC2') {
             steps {
-                sh '''
-                    echo "🚀 Deploying Spring Boot JAR to EC2..."
-                    scp -i ${PEM_PATH} "${BACKEND_DIR_WINDOWS}/target/${SPRING_JAR_NAME}" ec2-user@${EC2_IP}:${DEPLOY_BACKEND_DIR}
+                script {
+                    def jarPath = "${env.BACKEND_DIR_WINDOWS}\\target\\${env.SPRING_JAR_NAME}"
+                    def angularDistPath = "${env.FRONTEND_DIR_WINDOWS}\\dist\\devotee-app\\*"
 
-                    echo "🌐 Deploying Angular build to EC2..."
-                    scp -i ${PEM_PATH} -r "${FRONTEND_DIR_WINDOWS}/dist/devotee-app/"* ec2-user@${EC2_IP}:${DEPLOY_FRONTEND_DIR}
+                    bat """
+                        echo 🚀 Copying Spring Boot JAR to EC2...
+                        "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no "${jarPath}" ec2-user@${env.EC2_IP}:${env.DEPLOY_BACKEND_DIR}
 
-                    echo "🔁 Restarting backend app remotely..."
-                    ssh -i ${PEM_PATH} ec2-user@${EC2_IP} "
-                        pkill -f 'java -jar' || true
-                        nohup java -jar ${DEPLOY_BACKEND_DIR}${SPRING_JAR_NAME} > spring.log 2>&1 &
-                    "
+                        echo 🌐 Copying Angular files to EC2...
+                        "${env.SCP_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no -r ${angularDistPath} ec2-user@${env.EC2_IP}:${env.DEPLOY_FRONTEND_DIR}
 
-                    echo "✅ Deployment to EC2 complete!"
-                '''
+                        echo 🔁 Restarting Spring Boot App...
+                        "${env.SSH_PATH}" -i "${env.PEM_PATH}" -o StrictHostKeyChecking=no ec2-user@${env.EC2_IP} ^
+                            "pkill -f 'java -jar' || true && nohup java -jar ${env.DEPLOY_BACKEND_DIR}${env.SPRING_JAR_NAME} > spring.log 2>&1 &"
+
+                        echo ✅ Deployment to EC2 completed!
+                    """
+                }
             }
         }
     }
 
     post {
         success {
-            echo '🎉 CI/CD Pipeline on Windows completed successfully!'
+            echo '🎉 CI/CD Pipeline completed successfully!'
         }
         failure {
-            echo '❌ Pipeline failed on Windows.'
+            echo '❌ CI/CD Pipeline failed.'
         }
     }
 }
