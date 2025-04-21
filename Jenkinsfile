@@ -21,7 +21,7 @@ pipeline {
 
         stage('Build Spring Boot App') {
             steps {
-                dir('DevoteeApplication') {  // Corrected folder path for Spring Boot
+                dir('D:\AgadgoanApplication\DevoteeApplicationBackend') {  // Corrected folder path for Spring Boot
                     sh 'mvn clean package -DskipTests'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build Angular App') {
             steps {
-                dir('devotee-app') {  // Corrected folder path for Angular
+                dir('D:\AgadgoanApplication\DevoteeApplicationFrontend') {  // Corrected folder path for Angular
                     // Debugging steps
                     sh 'echo "📁 Current Dir: $(pwd)"'  // Show the current working directory
                     sh 'ls -la'  // List files to verify angular.json is present
