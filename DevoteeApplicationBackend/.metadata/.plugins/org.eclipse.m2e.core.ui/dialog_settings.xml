@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="D:\AgadgoanApplication\DevoteeApplicationBackend"/>
 			<item value="D:\AgadgoanApplication\AgadgoanApplication"/>
 		</list>
 		<list key="projectNameTemplate">

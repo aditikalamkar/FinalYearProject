@@ -15,9 +15,9 @@ interface Devotee {
 })
 export class AuthService {
   
-  // private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
+  private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
 
-  private baseUrl = 'http://localhost:8081';
+  // private baseUrl = 'http://localhost:8081';
   constructor(private http: HttpClient) {}
 
   // Register a new user

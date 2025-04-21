@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class PrasadBookingService {
-  // private BASE_URL = environment.apiUrl;
-  private BASE_URL = 'http://localhost:8081';
+  private BASE_URL = environment.apiUrl;
+  // private BASE_URL = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 

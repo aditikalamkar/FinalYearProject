@@ -1,3 +1,2 @@
-2025/04/09-21:19:56.344 b80 Reusing MANIFEST D:\AgadgoanApplication\AgadgoanApplication\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2025/04/09-21:19:56.361 b80 Recovering log #3
-2025/04/09-21:19:56.364 b80 Reusing old log D:\AgadgoanApplication\AgadgoanApplication\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2025/04/21-21:13:24.830 3428 Creating DB D:\AgadgoanApplication\DevoteeApplicationBackend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2025/04/21-21:13:25.533 3428 Reusing MANIFEST D:\AgadgoanApplication\DevoteeApplicationBackend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001

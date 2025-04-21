@@ -2103,3 +2103,4 @@ java.io.FileNotFoundException: D:\AgadgoanApplication\AgadgoanApplication\.metad
 	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2498)
 	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:555)
 	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:124)
+2025-04-21 21:12:24,868 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
