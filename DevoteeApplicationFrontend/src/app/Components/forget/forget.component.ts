@@ -17,7 +17,7 @@ export class ForgetComponent {
   ngOnInit(): void {
     setTimeout(() => {
       Swal.fire({
-        title: 'Donation Page Live',
+        title: 'Reset functionality Page Live',
         text: 'This forget page functionality is in working mode.',
         icon: 'info',
         confirmButtonText: 'OK'
