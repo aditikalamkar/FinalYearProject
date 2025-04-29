@@ -12,7 +12,7 @@ export class PangatBookingComponent {
   booking = {
     date: '',
     timeSlot: '',
-    noOfPeople: 0,
+    noOfPeople: 1,
     amount: 3500, // Base per-person amount
     baseAmount: 3500, 
     donation: null,  // Optional donation

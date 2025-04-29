@@ -33,9 +33,9 @@
       <!-- Number of People -->
       <div class="form-group">
         <i class="fa fa-users"></i>
-        <input type="number" name="numberOfPeople" [(ngModel)]="booking.numberOfPeople" placeholder="No. of People"
-          required min="1" max="10" #numberOfPeople="ngModel" />
-        <div class="error" *ngIf="numberOfPeople.invalid && numberOfPeople.touched">
+        <input type="number" name="noOfPeople" [(ngModel)]="booking.noOfPeople" placeholder="No. of People"
+          required min="1" max="10" #noOfPeople="ngModel" />
+        <div class="error" *ngIf="noOfPeople.invalid && noOfPeople.touched">
           You can book for up to 10 people at a time.
         </div>
       </div>

@@ -13,7 +13,7 @@ export class DarshanBookingComponent {
   booking = {
     date: '',
     timeSlot: '',
-    numberOfPeople: 0,
+    noOfPeople: 1,
     message: '',
     donation: null,
   };
@@ -25,6 +25,7 @@ export class DarshanBookingComponent {
     bookedSlots: number;
     availableSlots: number;
   } | null = null;
+// noOfPeople: any;
 
   constructor(
     private service: DarshanBookingService,
