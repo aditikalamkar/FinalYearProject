@@ -16,9 +16,10 @@ public interface PrasadService {
 
     void deleteBookingById(int id);
 
-    Map<String, Object> getSlotAvailability(String date, String timeSlot);
+
 
     List<PrasadBooking> getBookingsByDevotee(Devotee devotee);
     
-    int getTotalBookedSeats(String date, String timeSlot);
+   
+    int getAvailableSlots(String date, String timeSlot);
 }

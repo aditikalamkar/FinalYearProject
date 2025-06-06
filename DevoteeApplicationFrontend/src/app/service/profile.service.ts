@@ -8,8 +8,8 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class ProfileService {
 
-  private baseUrl = environment.apiUrl;
-  // private baseUrl = 'http://localhost:8081';
+  // private baseUrl = environment.apiUrl;
+   private baseUrl = 'http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 

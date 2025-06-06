@@ -1,8 +1,7 @@
 package com.project.AgadgoanApplication.services;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import com.project.AgadgoanApplication.model.PangatBooking;
 @Service
 public class PangatServiceImpl implements PangatService {
 
+	private static final int MAX_CAPACITY = 150;
+	
     @Autowired
     private PangatBookingRepository repo;
 
@@ -56,26 +57,14 @@ public class PangatServiceImpl implements PangatService {
     }
 
     @Override
-    public Map<String, Object> getSlotAvailability(String date, String timeSlot) {
-        int totalSlots = 20; // Max people per slot
-        Integer bookedPeople = repo.sumNoOfPeopleByDateAndTimeSlot(date, timeSlot);
-        int booked = (bookedPeople != null) ? bookedPeople : 0;
-        int available = totalSlots - booked;
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("total", totalSlots);
-        result.put("booked", booked);
-        result.put("available", Math.max(available, 0));
-
-        return result;
-    }
-
-    @Override
     public List<PangatBooking> getBookingsByDevotee(Devotee devotee) {
         return repo.findByDevotee(devotee);
     }
+  
     @Override
-    public int getBookedCount(String date, String timeSlot) {
-        return repo.countByDateAndTimeSlot(date, timeSlot);
-    }
+	public int getAvailableSlots(String date, String timeSlot) {
+		// TODO Auto-generated method stub
+		int booked = repo.getTotalPeopleBookedForSlot(date, timeSlot);
+		return MAX_CAPACITY - booked;
+	}
 }

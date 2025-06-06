@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
         this.router.navigate([`/${page}`]);
       } else {
         let actionText = page === 'booking' ? 'booking' : 'donation';
-    
+
         Swal.fire({
           icon: 'warning',
           title: 'Login Required',
@@ -41,13 +41,13 @@ export class NavbarComponent implements OnInit {
           if (result.isConfirmed) {
             this.router.navigate(['/login']);
           }
-        });        
+        });
       }
     }
-    
-  
 
-  
+
+
+
   loadUserProfile(): void {
     this.profileService.getDevoteeDetails().subscribe({
       next: (data) => {
@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit {
       error: () => {
         this.isLoggedIn = false;
         this.router.navigate(['/login']);
-        
+
       }
     });
   }

@@ -15,7 +15,10 @@ export class DonationComponent implements OnInit {
         text: 'This donation page is in working mode.',
         icon: 'info',
         confirmButtonText: 'OK'
-      });
-    }, 2000); // Trigger after 2 seconds
+      }).then(() => {
+            // Hard redirect to /home and refresh the page
+            window.location.href = '';
+          });
+    }, 1000); // Trigger after 2 seconds
   }
 }

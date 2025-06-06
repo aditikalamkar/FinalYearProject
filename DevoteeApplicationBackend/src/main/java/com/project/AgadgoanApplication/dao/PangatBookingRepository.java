@@ -20,9 +20,9 @@ public interface PangatBookingRepository extends JpaRepository<PangatBooking, In
     int countByDateAndTimeSlot(String date, String timeSlot);
     List<PangatBooking> findByDateAndTimeSlot(String date, String timeSlot);
 
-    @Query("SELECT SUM(p.noOfPeople) FROM PangatBooking p WHERE p.date = :date AND p.timeSlot = :timeSlot")
-    Integer sumNoOfPeopleByDateAndTimeSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
-
+    @Query("SELECT COALESCE(SUM(d.noOfPeople), 0) FROM PangatBooking d WHERE d.date = :date AND d.timeSlot = :timeSlot")
+    int getTotalPeopleBookedForSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
+    
     // Get all bookings for a particular devotee.
     List<PangatBooking> findByDevotee(Devotee devotee); 
 }

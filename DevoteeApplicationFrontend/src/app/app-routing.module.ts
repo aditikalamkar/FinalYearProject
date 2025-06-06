@@ -11,6 +11,9 @@ import { PrasadBookingComponent } from './Components/prasad-booking/prasad-booki
 import { DarshanBookingComponent } from './Components/darshan-booking/darshan-booking.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
+import { AdminLoginComponent } from './Components/admin-login/admin-login.component';
+import { AdminAuthGuard } from './guards/admin.guard';
 
 // ✅ Import AuthGuard
 
@@ -22,12 +25,19 @@ const routes: Routes = [
   { path: 'forget', component: ForgetComponent },
   { path: 'contact', component: ContactComponent },
 
+
   // ✅ Protected Routes
   { path: 'donation', component: DonationComponent, canActivate: [AuthGuard] },
   { path: 'Pangat-Booking', component: PangatBookingComponent, canActivate: [AuthGuard] },
   { path: 'Prasad-Booking', component: PrasadBookingComponent, canActivate: [AuthGuard] },
   { path: 'darshan-booking', component: DarshanBookingComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+
+// Admin routes
+{ path: 'admin-login', component: AdminLoginComponent },
+{ path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AdminAuthGuard] },
+
+
 
   { path: '**', redirectTo: '' } // Wildcard route
 ];

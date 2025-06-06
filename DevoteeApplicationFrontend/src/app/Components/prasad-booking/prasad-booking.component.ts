@@ -14,44 +14,51 @@ export class PrasadBookingComponent {
     timeSlot: '',
     noOfPeople: 1,
     message: '',
-    donation: null,  // Optional donation
+    donation: null,
   };
 
   today = new Date().toISOString().split('T')[0];
-
-  slotInfo = {
-    booked: 0,
-    total: null
-  };
-  showSlots = false;
+  availableSlots: number | null = null;
 
   constructor(
     private prasadService: PrasadBookingService,
     private router: Router
   ) {}
 
-  get slotsLeft() {
-    return this.slotInfo.total !== null ? this.slotInfo.total - this.slotInfo.booked : 0;
-  }
-
-  updateAvailability() {
+  checkAvailability() {
     const { date, timeSlot } = this.booking;
     if (date && timeSlot) {
-      this.prasadService.getSlotAvailability(date, timeSlot).subscribe({
-        next: (res: any) => {
-          this.slotInfo.booked = res.booked;
-          this.slotInfo.total = res.total;
-        },
-        error: () => {
-          this.slotInfo = { booked: 0, total: null };
-        }
+      this.prasadService.getAvailableSlots(date, timeSlot).subscribe({
+        next: (slots) => this.availableSlots = slots,
+        error: () => this.availableSlots = null
       });
+    } else {
+      this.availableSlots = null;
     }
   }
 
-  
   submitForm(form: any) {
     if (form.valid) {
+      if (this.booking.noOfPeople > 10) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Limit Exceeded',
+          text: 'You can book a maximum of 10 people.',
+          confirmButtonColor: '#e67e22'
+        });
+        return;
+      }
+
+      if (this.availableSlots !== null && this.booking.noOfPeople > this.availableSlots) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Slot Full',
+          text: `Only ${this.availableSlots} slots left for this time.`,
+          confirmButtonColor: '#e67e22'
+        });
+        return;
+      }
+
       this.prasadService.createBooking(this.booking).subscribe({
         next: () => {
           Swal.fire({
@@ -59,9 +66,8 @@ export class PrasadBookingComponent {
             title: 'Prasad Booking Confirmed!',
             confirmButtonColor: '#e67e22'
           }).then(() => this.router.navigate(['/profile']));
-
           form.resetForm();
-          this.slotInfo = { booked: 0, total: null };
+          this.availableSlots = null;
         },
         error: (err) => {
           console.error('Booking failed:', err);

@@ -14,19 +14,19 @@ interface Devotee {
   providedIn: 'root'
 })
 export class AuthService {
-  
-  private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
 
-  // private baseUrl = 'http://localhost:8081';
+  // private baseUrl = environment.apiUrl ;  //'http://localhost:8081'; // Backend URL
+
+  private baseUrl = 'http://localhost:8081';
   constructor(private http: HttpClient) {}
 
   // Register a new user
   register(devotee: Devotee): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/register`, devotee, {
       withCredentials: true,
-      
+
     });
-    
+
 
   }
 

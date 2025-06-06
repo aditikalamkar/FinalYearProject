@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class PrasadBookingService {
-  private BASE_URL = environment.apiUrl;
-  // private BASE_URL = 'http://localhost:8081';
+  // private BASE_URL = environment.apiUrl;
+   private BASE_URL = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 
@@ -32,10 +32,10 @@ export class PrasadBookingService {
     return this.http.delete(`${this.BASE_URL}/prasad/delete/${id}`, { withCredentials: true });
   }
 
-  // ✅ Check availability for a given date and time slot
-  getSlotAvailability(date: string, timeSlot: string): Observable<{ booked: number; total: number }> {
-    const params = new HttpParams().set('date', date).set('timeSlot', timeSlot);
-    return this.http.get<{ booked: number; total: number }>(`${this.BASE_URL}/prasad/availability`, { params });
+   getAvailableSlots(date: string, timeSlot:string){
+    return this.http.get<number>(`${this.BASE_URL}/prasad/available`, {
+      params :{date,timeSlot}
+    })
   }
 
   // ✅ Get bookings of the currently logged-in user

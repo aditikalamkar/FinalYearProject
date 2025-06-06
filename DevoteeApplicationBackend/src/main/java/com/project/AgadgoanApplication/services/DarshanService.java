@@ -15,6 +15,6 @@ public interface DarshanService {
     List<DarshanBooking> getBookingsByDevotee(Devotee devotee);
    
 
-
+    int getAvailableSlots(String date, String timeSlot);
 
 }

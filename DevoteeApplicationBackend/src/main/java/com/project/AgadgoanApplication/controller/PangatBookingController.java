@@ -73,13 +73,6 @@ public class PangatBookingController {
         return ResponseEntity.ok(Map.of("message", "Booking deleted successfully", "id", id));
     }
 
-    // ✅ Check slot availability
-    @GetMapping("/pangat/availability")
-    public ResponseEntity<Map<String, Object>> getSlotAvailability(
-            @RequestParam String date,
-            @RequestParam String timeSlot) {
-        return ResponseEntity.ok(service.getSlotAvailability(date, timeSlot));
-    }
 
 
     // ✅ Get bookings for logged-in user
@@ -94,5 +87,10 @@ public class PangatBookingController {
 
         List<PangatBooking> bookings = service.getBookingsByDevotee(currentUser);
         return ResponseEntity.ok(bookings);
+    }
+    
+    @GetMapping("/pangat/available")
+    public int getAvailableSlots(@RequestParam String date , @RequestParam String timeSlot) {
+    	return service.getAvailableSlots(date, timeSlot);
     }
 }

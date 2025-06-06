@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="D:\AgadgoanApplication\DevoteeApplicationBackend"/>
 			<item value="D:\BEAutomationTestingProject\AgadgoanAutomation\selenium-serenity-bdd-agadgao-automation"/>
 			<item value="D:\BEAutomationTestingProject"/>
-			<item value="D:\AgadgoanApplication\DevoteeApplicationBackend"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

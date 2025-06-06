@@ -4,12 +4,10 @@
     <p>Offer food, spread kindness, seek grace.</p>
 
     <form #form="ngForm" id="pangatForm" (ngSubmit)="submitForm(form)" novalidate>
-
-
       <!-- Date -->
       <div class="form-group">
         <i class="fa fa-calendar"></i>
-        <input type="date" name="date" [(ngModel)]="booking.date" [min]="today" required (change)="updateAvailability()"
+        <input type="date" name="date" [(ngModel)]="booking.date" [min]="today" required (change)="checkAvailability()"
           #date="ngModel" />
         <div class="error" *ngIf="date.invalid && date.touched">
           Please select a valid date.
@@ -19,65 +17,55 @@
       <!-- Time Slot -->
       <div class="form-group">
         <i class="fa fa-clock"></i>
-        <select name="timeSlot" [(ngModel)]="booking.timeSlot" required (change)="updateAvailability()"
+        <select name="timeSlot" [(ngModel)]="booking.timeSlot" required (change)="checkAvailability()"
           #timeSlot="ngModel">
-          <option value="" disabled [selected]="!booking.timeSlot">Select Time Slot or Food Type</option>
-          <option value="9AM-11AM">Breakfast(9AM - 11AM)</option>
-          <option value="12PM-3PM">Lunch(12PM - 3PM)</option>
-          <option value="7PM-9PM">Dinner(7PM - 9PM)</option>
+          <option value="" disabled selected>Select Time Slot or Food Type</option>
+          <option value="9AM-11AM">Breakfast (9AM - 11AM)</option>
+          <option value="12PM-3PM">Lunch (12PM - 3PM)</option>
+          <option value="7PM-9PM">Dinner (7PM - 9PM)</option>
         </select>
         <div class="error" *ngIf="timeSlot.invalid && timeSlot.touched">
           Please select a time slot or food type.
         </div>
       </div>
 
-      <!-- Number of People -->
-      <div class="form-group">
-        <i class="fa fa-users"></i>
-        <input type="number" name="numberOfPeople" [(ngModel)]="booking.noOfPeople" min="1" max="10"
-          #numberOfPeople="ngModel" placeholder="No. of People" required />
-        <div class="error" *ngIf="numberOfPeople.invalid && numberOfPeople.touched">
-          You can book for up to 10 people at a time.
-        </div>
-      </div>
-      <br>
-
-      <!-- Slot Info -->
-      <div class="form-group availability-info" *ngIf="slotInfo.total !== null">
-        <span style="color: #e67e22; font-weight: 500;">
-          Slots booked: {{ slotInfo.booked }} / {{ slotInfo.total }}
+      <!-- Slot Availability Info -->
+      <div class="form-group" *ngIf="availableSlots !== null">
+        <span class="availability-text" *ngIf="availableSlots > 0" style="color: #27ae60;">
+          Slots Available: {{ availableSlots }}
         </span>
-        <span *ngIf="slotInfo.available > 0" style="color: #27ae60;">
-          Only {{ slotInfo.available }} pangat slots left!
-        </span>
-        <span *ngIf="slotInfo.available === 0" style="color: #c0392b;">
+        <span class="availability-text" *ngIf="availableSlots === 0" style="color: #c0392b;">
           All slots are full for this time.
         </span>
       </div>
 
-     <!-- Pangat Booking Amount -->
+      <!-- Number of People -->
+      <div class="form-group">
+        <i class="fa fa-users"></i>
+        <input type="number" name="numberOfPeople" [(ngModel)]="booking.noOfPeople" min="1" max="10"
+          #numberOfPeople="ngModel" placeholder="No. of People" required (input)="calculateAmount()" />
+        <div class="error" *ngIf="numberOfPeople.invalid && numberOfPeople.touched">
+          You can book for up to 10 people at a time.
+        </div>
+      </div>
+
+      <br />
+
+      <!-- Pangat Booking Amount -->
       <div class="form-group">
         <i class="fa fa-inr"></i>
-        <input type="text" [value]="booking.amount * booking.noOfPeople | currency: 'INR'" disabled />
+        <input type="text" [value]="booking.amount | currency: 'INR'" disabled />
       </div>
-      
-      <!-- Optional Donation -->
-      <!-- <div class="form-group">
-        <i class="fa fa-inr"></i>
-        <input type="number" name="donation" [(ngModel)]="booking.donation" min="0"
-          placeholder="Additional Donation Amount (Optional)" />
-      </div> -->
 
-      <!-- Optional Message -->
-      <!-- <div class="form-group">
+       <!-- Optional Notes -->
+      <div class="form-group">
         <i class="fa fa-comment"></i>
-        <textarea name="message" [(ngModel)]="booking.message" placeholder="Additional Message (Optional)">
-        </textarea>
-      </div> -->
+        <textarea name="message" [(ngModel)]="booking.message" rows="3" placeholder="Any message (optional)"></textarea>
+      </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="btn-submit">
-        <i class="fa fa-check-circle"></i> Book Now
+      <!-- Submit -->
+      <button type="submit" class="btn-submit" [disabled]="availableSlots !== null && availableSlots === 0">
+        <i class="fa fa-check-circle"></i> Book Darshan
       </button>
     </form>
   </div>

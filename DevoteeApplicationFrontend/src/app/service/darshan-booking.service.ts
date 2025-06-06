@@ -9,8 +9,8 @@ import { DarshanBookingComponent } from '../Components/darshan-booking/darshan-b
 })
 export class DarshanBookingService {
 
-  private BASE_URL = environment.apiUrl; 
-  // private BASE_URL ='http://localhost:8081';
+  // private BASE_URL = environment.apiUrl;
+  private BASE_URL ='http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 
@@ -45,5 +45,11 @@ export class DarshanBookingService {
       .set('timeSlot', timeSlot);
 
     return this.http.get(`${this.BASE_URL}/darshan/availability`, { params });
+  }
+
+  getAvailableSlots(date: string, timeSlot:string){
+    return this.http.get<number>(`${this.BASE_URL}/darshan/available`, {
+      params :{date,timeSlot}
+    })
   }
 }

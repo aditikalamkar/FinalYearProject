@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="overlay"></div>
+  <div class="login-card">
+    <h2 class="title">🔑 Admin Panel!</h2>
+    <p class="subtitle">Login to Shri Kal Bhairavnath Admin Panel</p>
+
+    <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Username -->
+      <div class="form-group">
+        <i class="fa fa-envelope"></i>
+        <input type="text" name="username" [(ngModel)]="admin.username" placeholder="Enter Your Username" required
+          #username="ngModel" />
+        <div class="error" *ngIf="username.invalid && username.touched">
+          Enter a valid Username
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group password-group">
+        <i class="fa fa-lock"></i>
+        <input [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="admin.password"
+          placeholder="Enter Password" required minlength="6" #password="ngModel" />
+        <i class="fa fa-eye toggle-password" (click)="togglePassword()"></i>
+        <div class="error" *ngIf="password.invalid && password.touched">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+
+      <div class="error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="form.invalid">Login</button>
+
+
+    </form>
+  </div>
+</div>

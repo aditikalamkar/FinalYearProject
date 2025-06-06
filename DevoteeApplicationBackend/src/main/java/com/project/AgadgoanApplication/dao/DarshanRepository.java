@@ -22,8 +22,10 @@ public interface DarshanRepository extends JpaRepository<DarshanBooking, Integer
     // Get all bookings for a particular devotee
     List<DarshanBooking> findByDevotee(Devotee devotee);
     
-    @Query("SELECT SUM(d.noOfPeople) FROM DarshanBooking d WHERE d.date = :date AND d.timeSlot = :timeSlot")
-    Integer countPeopleByDateAndTimeSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
+    @Query("SELECT COALESCE(SUM(d.noOfPeople), 0) FROM DarshanBooking d WHERE d.date = :date AND d.timeSlot = :timeSlot")
+    int getTotalPeopleBookedForSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
+  
+    
 
    
 }

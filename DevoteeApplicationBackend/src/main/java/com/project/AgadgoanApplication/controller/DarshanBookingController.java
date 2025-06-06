@@ -87,4 +87,9 @@ public class DarshanBookingController {
         List<DarshanBooking> bookings = service.getBookingsByDevotee(currentUser);
         return ResponseEntity.ok(bookings);
     }
+    
+    @GetMapping("/darshan/available")
+    public int getAvailableSlots(@RequestParam String date , @RequestParam String timeSlot) {
+    	return service.getAvailableSlots(date, timeSlot);
+    }
 }

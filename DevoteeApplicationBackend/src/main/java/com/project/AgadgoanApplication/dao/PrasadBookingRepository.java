@@ -17,8 +17,10 @@ public interface PrasadBookingRepository extends JpaRepository<PrasadBooking, In
     List<PrasadBooking> findByDevotee_Name(String name);
 
     // Sum of all people booked for a specific date and time slot
-    @Query("SELECT COALESCE(SUM(p.noOfPeople), 0) FROM PrasadBooking p WHERE p.date = :date AND p.timeSlot = :timeSlot")
-    int getTotalBooked(@Param("date") String date, @Param("timeSlot") String timeSlot);
+   
     // Find bookings by devotee entity
     List<PrasadBooking> findByDevotee(Devotee devotee);
+    
+    @Query("SELECT COALESCE(SUM(d.noOfPeople), 0) FROM PrasadBooking d WHERE d.date = :date AND d.timeSlot = :timeSlot")
+    int getTotalPeopleBookedForSlot(@Param("date") String date, @Param("timeSlot") String timeSlot);
 }

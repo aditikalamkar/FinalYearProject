@@ -1,0 +1,96 @@
+<div class="container mt-4">
+  <h2>Admin Dashboard</h2>
+  <button class="btn btn-danger float-end" (click)="logout()">Logout</button>
+
+  <hr>
+
+  <!-- Darshan Bookings -->
+  <h3>Darshan Bookings</h3>
+  <table class="table table-striped table-bordered" *ngIf="darshanBookings.length > 0; else noDarshan">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time Slot</th>
+        <th>No. of People</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of darshanBookings">
+        <td>{{ booking.name }}</td>
+        <td>{{ booking.date }}</td>
+        <td>{{ booking.timeSlot }}</td>
+        <td>{{ booking.noOfPeople }}</td>
+        <td>{{ booking.mobile }}</td>
+        <td>{{ booking.email }}</td>
+        <td>{{ booking.amount }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noDarshan><p>No Darshan bookings found.</p></ng-template>
+
+  <hr>
+
+  <!-- Pangat Bookings -->
+  <h3>Pangat Bookings</h3>
+  <table class="table table-striped table-bordered" *ngIf="pangatBookings.length > 0; else noPangat">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time Slot</th>
+        <th>No. of People</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of pangatBookings">
+        <td>{{ booking.name }}</td>
+        <td>{{ booking.date }}</td>
+        <td>{{ booking.timeSlot }}</td>
+        <td>{{ booking.noOfPeople }}</td>
+        <td>{{ booking.mobile }}</td>
+        <td>{{ booking.email }}</td>
+        <td>{{ booking.amount }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noPangat><p>No Pangat bookings found.</p></ng-template>
+
+  <hr>
+
+  <!-- Prasad Bookings -->
+  <h3>Prasad Bookings</h3>
+  <table class="table table-striped table-bordered" *ngIf="prasadBookings.length > 0; else noPrasad">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Time Slot</th>
+        <th>No. of People</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Amount</th>
+        <th>Donation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of prasadBookings">
+        <td>{{ booking.name }}</td>
+        <td>{{ booking.date }}</td>
+        <td>{{ booking.timeSlot }}</td>
+        <td>{{ booking.noOfPeople }}</td>
+        <td>{{ booking.mobile }}</td>
+        <td>{{ booking.email }}</td>
+        <td>{{ booking.amount }}</td>
+        <td>{{ booking.donation || '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noPrasad><p>No Prasad bookings found.</p></ng-template>
+</div>

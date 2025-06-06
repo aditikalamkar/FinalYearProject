@@ -18,6 +18,7 @@ public class DarshanServiceImpl implements DarshanService {
     @Autowired
     private DarshanRepository repo;
    
+    private static int MAX_CAPACITY = 150;
     @Override
     public List<DarshanBooking> getAllBookings() {
         return repo.findAll();
@@ -59,6 +60,13 @@ public class DarshanServiceImpl implements DarshanService {
 	public DarshanBooking saveBooking(DarshanBooking booking, Devotee devotee) {
 		 booking.setDevotee(devotee);
 	        return repo.save(booking);
+	}
+
+	@Override
+	public int getAvailableSlots(String date, String timeSlot) {
+		// TODO Auto-generated method stub
+		int booked = repo.getTotalPeopleBookedForSlot(date, timeSlot);
+		return MAX_CAPACITY - booked;
 	}
 
 	

@@ -11,8 +11,10 @@ public interface PangatService {
     List<PangatBooking> getAllBookings();
     PangatBooking updateBookingById(int id, PangatBooking updatedBooking);
     void deleteBookingById(int id);
-    Map<String, Object> getSlotAvailability(String date, String timeSlot);
+  
     List<PangatBooking> getBookingsByDevotee(Devotee devotee);
-    int getBookedCount(String date, String timeSlot);
+    
+    
+    int getAvailableSlots(String date, String timeSlot);
     
 }

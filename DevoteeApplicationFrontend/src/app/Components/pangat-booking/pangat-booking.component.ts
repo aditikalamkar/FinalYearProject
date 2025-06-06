@@ -13,80 +13,110 @@ export class PangatBookingComponent {
     date: '',
     timeSlot: '',
     noOfPeople: 1,
-    amount: 3500, // Base per-person amount
-    baseAmount: 3500, 
-    donation: null,  // Optional donation
+    amount: 3500,
+    baseAmount: 3500,
+    donation: null,
     message: ''
   };
 
   today = new Date().toISOString().split('T')[0];
 
-  slotInfo = {
-    booked: 0,
-    total: null,
-    available: 0 
-  };
-  showSlots = false;
+  availableSlots: number | null = null;
 
   constructor(
     private pangatService: PangatBookingService,
     private router: Router
   ) {}
 
-  get slotsLeft() {
-    return this.slotInfo.total !== null ? this.slotInfo.total - this.slotInfo.booked : 0;
-  }
-
-
-updateAvailability() {
-  const { date, timeSlot } = this.booking;
-  if (date && timeSlot) {
-    this.pangatService.getSlotAvailability(date, timeSlot).subscribe({
-      next: (res: any) => {
-        this.slotInfo.booked = res.booked;
-        this.slotInfo.total = res.total;
-        this.slotInfo.available = res.available; // ← Directly use 'available' from backend
-      },
-      error: () => {
-        this.slotInfo = { booked: 0, total: null, available: 0 };
-      }
-    });
-  }
-}
-
-  
-  
   // Just updating UI — actual amount is used for display only
   calculateAmount() {
     this.booking.amount = this.booking.noOfPeople * this.booking.baseAmount;
   }
 
+  checkAvailability() {
+    const { date, timeSlot } = this.booking;
+
+    if (date && timeSlot) {
+      this.pangatService.getAvailableSlots(date, timeSlot).subscribe({
+        next: (slots) => {
+          this.availableSlots = slots;
+        },
+        error: () => {
+          this.availableSlots = null;
+        }
+      });
+    } else {
+      this.availableSlots = null;
+    }
+  }
+
   submitForm(form: any) {
     if (form.valid) {
-      this.pangatService.createBooking(this.booking).subscribe({
-        next: () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Pangat Booked!',
-            text: 'Your seva has been successfully booked.',
-            confirmButtonColor: '#e67e22',
-          }).then(() => {
-            this.router.navigate(['/profile']);
-          });
+      this.pangatService.getAvailableSlots(this.booking.date, this.booking.timeSlot).subscribe({
+        next: (availableSlots) => {
+          if (this.booking.noOfPeople > 10) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Limit Exceeded',
+              text: 'You can book a maximum of 10 people.',
+              confirmButtonColor: '#e67e22'
+            });
+            return;
+          }
 
-          form.resetForm();
-          this.slotInfo = { booked: 0, total: null,available: 0  };
-          this.showSlots = false;
+          if (this.booking.noOfPeople > availableSlots) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Slot Full',
+              text: `Only ${availableSlots} slots left for this time.`,
+              confirmButtonColor: '#e67e22'
+            });
+            return;
+          }
+
+          // Proceed with booking
+          this.pangatService.createBooking(this.booking).subscribe({
+            next: () => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Pangat Booked!',
+                text: 'Your seva has been successfully booked.',
+                confirmButtonColor: '#e67e22',
+              }).then(() => {
+                this.router.navigate(['/profile']);
+              });
+
+              form.resetForm();
+              this.booking = {
+                date: '',
+                timeSlot: '',
+                noOfPeople: 1,
+                amount: 3500,
+                baseAmount: 3500,
+                donation: null,
+                message: ''
+              };
+              this.availableSlots = null;
+            },
+            error: (err) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Booking failed!',
+                text: 'Something went wrong. Please try again.',
+                confirmButtonColor: '#e67e22',
+              });
+              console.error('Booking error:', err);
+            }
+          });
         },
-        error: (err) => {
+        error: () => {
           Swal.fire({
             icon: 'error',
-            title: 'Booking failed!',
-            text: 'Something went wrong. Please try again.',
-            confirmButtonColor: '#e67e22',
+            title: 'Availability Error',
+            text: 'Could not check slot availability. Try again later.',
+            confirmButtonColor: '#e67e22'
           });
-          console.error('Booking error:', err);
-        },
+        }
       });
     } else {
       Swal.fire({

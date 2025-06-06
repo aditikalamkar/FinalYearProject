@@ -75,22 +75,7 @@ public class PrasadBookingController {
         return ResponseEntity.ok(Map.of("message", "Booking deleted successfully", "id", id));
     }
 
-    // ✅ Check slot availability
-    @GetMapping("/prasad/availability")
-    public ResponseEntity<Map<String, Integer>> getTotalBooked(
-            @RequestParam String date,
-            @RequestParam String timeSlot) {
-
-        int total = 1500;
-        int booked = service.getTotalBookedSeats(date, timeSlot);
-
-        Map<String, Integer> response = new HashMap<>();
-        response.put("total", total);
-        response.put("booked", booked);
-        response.put("available", total - booked);
-
-        return ResponseEntity.ok(response);
-    }
+   
 
     // ✅ Get bookings for logged-in user
     @GetMapping("/prasad/my-bookings")
@@ -104,5 +89,12 @@ public class PrasadBookingController {
 
         List<PrasadBooking> bookings = service.getBookingsByDevotee(currentUser);
         return ResponseEntity.ok(bookings);
+ 
+    }
+    
+    
+    @GetMapping("/prasad/available")
+    public int getAvailableSlots(@RequestParam String date , @RequestParam String timeSlot) {
+    	return service.getAvailableSlots(date, timeSlot);
     }
 }

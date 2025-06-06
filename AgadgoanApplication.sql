@@ -2,17 +2,24 @@ Create database AgadgoanApplication;
 
 use AgadgoanApplication;
 
+desc AgadgoanApplication;
 drop database AgadgoanApplication;
 
 show tables;
+desc admin;
+INSERT INTO admin (admin_username, admin_password,role)
+VALUES ('admin', 'admin123','admin');
 
-select * from pangat_booking;
+select * from admin;
+select * from pangat_bookings;
 
-
+desc devotees;
 select * from devotees;
 
 select * from darshan_booking;
 select * from prasad_booking;
+
+desc darshan_booking;
 
 -- Devotee Table
 CREATE TABLE Devotees (

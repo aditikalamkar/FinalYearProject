@@ -14,6 +14,8 @@ import com.project.AgadgoanApplication.model.Devotee;
 @Service
 public class PrasadServiceImpl implements PrasadService {
 
+	private static final int MAX_CAPACITY = 150;
+	
     @Autowired
     private PrasadBookingRepository repo;
 
@@ -46,28 +48,20 @@ public class PrasadServiceImpl implements PrasadService {
         repo.deleteById(id);
     }
 
-    @Override
-    public Map<String, Object> getSlotAvailability(String date, String timeSlot) {
-        int totalSeats = 1500; // example capacity
-        int bookedSeats = repo.getTotalBooked(date, timeSlot);
-        int availableSeats = totalSeats - bookedSeats;
-
-        Map<String, Object> slotInfo = new HashMap<>();
-        slotInfo.put("totalSeats", totalSeats);
-        slotInfo.put("bookedSeats", bookedSeats);
-        slotInfo.put("availableSeats", availableSeats);
-        return slotInfo;
-    }
-
+    
     @Override
     public List<PrasadBooking> getBookingsByDevotee(Devotee devotee) {
         return repo.findByDevotee(devotee);
     }
 
-	@Override
-	public int getTotalBookedSeats(String date, String timeSlot) {
-		  return repo.getTotalBooked(date, timeSlot);
-	}
+    
+
+    public int getAvailableSlots(String date, String timeSlot) {
+        int booked = repo.getTotalPeopleBookedForSlot(date, timeSlot);
+        return MAX_CAPACITY - booked;
+    }
+    
+	
 	
 	 
 }
