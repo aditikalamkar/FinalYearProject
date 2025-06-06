@@ -9,8 +9,8 @@ import { DarshanBookingComponent } from '../Components/darshan-booking/darshan-b
 })
 export class DarshanBookingService {
 
-  // private BASE_URL = environment.apiUrl;
-  private BASE_URL ='http://localhost:8081';
+   private BASE_URL = environment.apiUrl;
+  // private BASE_URL ='http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 

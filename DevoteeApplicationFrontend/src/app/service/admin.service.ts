@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment.prod';
+
 export interface AdminCredentials {
   username: string;
   password: string;
@@ -17,7 +19,7 @@ export interface Booking {
   type: 'Pangat' | 'Prasad' | 'Darshan'; // missing entirely
   timeSlot: string;
   noOfPeople: number;
-  amount: number;     // missing entirely
+  amount: number;
   donation?: number;
 }
 
@@ -26,7 +28,10 @@ export interface Booking {
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = 'http://localhost:8081';
+
+  private baseUrl = environment.apiUrl ;
+
+  // private baseUrl = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {}
 
