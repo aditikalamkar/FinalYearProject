@@ -15,7 +15,6 @@ import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dash
 import { AdminLoginComponent } from './Components/admin-login/admin-login.component';
 import { AdminAuthGuard } from './guards/admin.guard';
 
-// ✅ Import AuthGuard
 
 
 const routes: Routes = [

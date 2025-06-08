@@ -20,7 +20,6 @@ export class PangatBookingComponent {
   };
 
   today = new Date().toISOString().split('T')[0];
-
   availableSlots: number | null = null;
 
   constructor(
@@ -28,7 +27,6 @@ export class PangatBookingComponent {
     private router: Router
   ) {}
 
-  // Just updating UI — actual amount is used for display only
   calculateAmount() {
     this.booking.amount = this.booking.noOfPeople * this.booking.baseAmount;
   }
@@ -74,14 +72,13 @@ export class PangatBookingComponent {
             return;
           }
 
-          // Proceed with booking
           this.pangatService.createBooking(this.booking).subscribe({
             next: () => {
               Swal.fire({
                 icon: 'success',
                 title: 'Pangat Booked!',
                 text: 'Your seva has been successfully booked.',
-                confirmButtonColor: '#e67e22',
+                confirmButtonColor: '#e67e22'
               }).then(() => {
                 this.router.navigate(['/profile']);
               });
@@ -98,14 +95,13 @@ export class PangatBookingComponent {
               };
               this.availableSlots = null;
             },
-            error: (err) => {
+            error: () => {
               Swal.fire({
                 icon: 'error',
-                title: 'Booking failed!',
+                title: 'Booking Failed',
                 text: 'Something went wrong. Please try again.',
-                confirmButtonColor: '#e67e22',
+                confirmButtonColor: '#e67e22'
               });
-              console.error('Booking error:', err);
             }
           });
         },
@@ -121,8 +117,9 @@ export class PangatBookingComponent {
     } else {
       Swal.fire({
         icon: 'error',
-        title: 'Please fill all required fields correctly.',
-        confirmButtonColor: '#e67e22',
+        title: 'Incomplete Form',
+        text: 'Please fill all required fields correctly.',
+        confirmButtonColor: '#e67e22'
       });
     }
   }

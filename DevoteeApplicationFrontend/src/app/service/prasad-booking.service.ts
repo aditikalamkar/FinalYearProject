@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class PrasadBookingService {
   private BASE_URL = environment.apiUrl;
-  //  private BASE_URL = 'http://localhost:8081';
+  // private BASE_URL = 'http://localhost:8081';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // ✅ Create booking (requires login/session)
   createBooking(data: any) {
@@ -32,10 +32,11 @@ export class PrasadBookingService {
     return this.http.delete(`${this.BASE_URL}/prasad/delete/${id}`, { withCredentials: true });
   }
 
-   getAvailableSlots(date: string, timeSlot:string){
-    return this.http.get<number>(`${this.BASE_URL}/prasad/available`, {
-      params :{date,timeSlot}
-    })
+  getAvailableSlots(date: string, timeSlot: string): Observable<number> {
+    return this.http.get<number>(`${this.BASE_URL}/darshan/available`, {
+      params: { date, timeSlot },
+      responseType: 'json' as const
+    });
   }
 
   // ✅ Get bookings of the currently logged-in user

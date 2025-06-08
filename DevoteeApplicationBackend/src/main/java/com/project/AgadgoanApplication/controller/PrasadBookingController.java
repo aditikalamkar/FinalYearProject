@@ -94,7 +94,8 @@ public class PrasadBookingController {
     
     
     @GetMapping("/prasad/available")
-    public int getAvailableSlots(@RequestParam String date , @RequestParam String timeSlot) {
-    	return service.getAvailableSlots(date, timeSlot);
+    public ResponseEntity<Integer> getAvailableSlots(@RequestParam String date, @RequestParam String timeSlot) {
+        int available = service.getAvailableSlots(date, timeSlot);
+        return ResponseEntity.ok(available);
     }
 }

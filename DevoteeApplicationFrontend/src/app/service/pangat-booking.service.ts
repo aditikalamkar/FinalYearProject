@@ -8,14 +8,14 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class PangatBookingService {
 
-  private BASE_URL =environment.apiUrl;
-  // private BASE_URL ='http://localhost:8081';
+   private BASE_URL =environment.apiUrl;
+  // private BASE_URL = 'http://localhost:8081';
 
   constructor(private http: HttpClient) { }
 
   // Create a new Pangat booking
   createBooking(data: any) {
-    return this.http.post(`${this.BASE_URL}/pangat/book`, data,{ withCredentials: true });
+    return this.http.post(`${this.BASE_URL}/pangat/book`, data, { withCredentials: true });
   }
 
   // Fetch all bookings
@@ -35,9 +35,10 @@ export class PangatBookingService {
 
 
 
-     getAvailableSlots(date: string, timeSlot:string){
-    return this.http.get<number>(`${this.BASE_URL}/pangat/available`, {
-      params :{date,timeSlot}
-    })
+  getAvailableSlots(date: string, timeSlot: string): Observable<number> {
+    return this.http.get<number>(`${this.BASE_URL}/darshan/available`, {
+      params: { date, timeSlot },
+      responseType: 'json' as const
+    });
   }
 }

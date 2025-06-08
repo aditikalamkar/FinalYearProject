@@ -29,16 +29,12 @@
         </div>
       </div>
 
-      <!-- Slot Availability Info -->
-      <div class="form-group" *ngIf="availableSlots !== null">
-        <span class="availability-text" *ngIf="availableSlots > 0" style="color: #27ae60;">
-          Slots Available: {{ availableSlots }}
-        </span>
-        <span class="availability-text" *ngIf="availableSlots === 0" style="color: #c0392b;">
-          All slots are full for this time.
+     <div class="form-group">
+        <span *ngIf="availableSlots !== null" class="availability-text">
+          Available Slots: {{ availableSlots }} / 150
         </span>
       </div>
-
+      
       <!-- Number of People -->
       <div class="form-group">
         <i class="fa fa-users"></i>

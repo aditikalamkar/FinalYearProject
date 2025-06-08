@@ -31,9 +31,9 @@
       </div>
 
       <!-- Slot Availability -->
-      <div class="form-group" *ngIf="availableSlots !== null">
-        <span class="availability-text">
-          Slots Available: {{ availableSlots }}
+      <div class="form-group">
+        <span *ngIf="availableSlots !== null" class="availability-text">
+          Available Slots: {{ availableSlots }} / 150
         </span>
       </div>
 
