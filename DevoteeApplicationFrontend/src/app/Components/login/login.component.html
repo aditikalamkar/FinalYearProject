@@ -1,11 +1,11 @@
 <div class="container">
   <div class="overlay"></div>
   <div class="login-card">
-    <h2 class="title">🔑 WELCOME BACK!</h2>
+    <h2 class="title">🔑 WELCOME To Project presentation!</h2>
     <p class="subtitle">Login to Shri Kal Bhairavnath Portal</p>
 
     <form #form="ngForm" (ngSubmit)="submitForm(form)" novalidate>
-      
+
       <!-- Email -->
       <div class="form-group">
         <i class="fa fa-envelope"></i>
@@ -18,7 +18,7 @@
         pattern="^[a-zA-Z0-9._%+-]+@gmail.com$"
         #email="ngModel"
       />
-      
+
         <div class="error" *ngIf="email.invalid && email.touched">
           Enter a valid Gmail address (e.g., example@gmail.com).
         </div>
