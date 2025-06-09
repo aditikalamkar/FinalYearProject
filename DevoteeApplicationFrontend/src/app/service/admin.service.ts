@@ -12,11 +12,11 @@ export interface AdminCredentials {
 
 export interface Booking {
   id: number;
-  name: string;       // missing at top level in JSON
+  name: string;
   date: string;
-  mobile: string;     // missing at top level in JSON
-  email: string;      // missing at top level in JSON
-  type: 'Pangat' | 'Prasad' | 'Darshan'; // missing entirely
+  mobile: string;
+  email: string;
+  type: 'Pangat' | 'Prasad' | 'Darshan';
   timeSlot: string;
   noOfPeople: number;
   amount: number;
