@@ -1,20 +1,20 @@
-# 🙏 Agadgaon Devotee Management System
+#  Agadgaon Devotee Management System
 
-## 📌 Introduction 
+##  Introduction 
 
 A **Full Stack Web Application** tailored for the devotees of **Agadgaon** village. This platform streamlines the process of **registrations**, **bookings** (Pangat, Prasad, Darshan), **donations**, and **slot availability**. Designed for both **devotees** and **admins**, it ensures a smooth, organized, and user-friendly experience.
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
-- 🧑‍💼 **Devotee Registration:** Secure and easy sign-up process for devotees.
-- 📅 **Smart Booking System:** Book **Pangat**, **Prasad**, or **Darshan** slots with real-time availability checks.
-- 📊 **Admin Dashboard:** Admins can manage, view, and update booking records and monitor overall activity.
+-  **Devotee Registration:** Secure and easy sign-up process for devotees.
+- **Smart Booking System:** Book **Pangat**, **Prasad**, or **Darshan** slots with real-time availability checks.
+- **Admin Dashboard:** Admins can manage, view, and update booking records and monitor overall activity.
 
 ---
 
-## 🔧 Tech Stack
+##  Tech Stack
 
 | Layer       | Technology                     |
 |------------|---------------------------------|
@@ -28,7 +28,7 @@ A **Full Stack Web Application** tailored for the devotees of **Agadgaon** villa
 
 ---
 
-## 🔄 System Workflow
+##  System Workflow
 
 Below is a high-level workflow of how the Agadgaon Devotee Management System operates:
 
@@ -36,7 +36,7 @@ Below is a high-level workflow of how the Agadgaon Devotee Management System ope
 
 ---
 
-### 📌 Step-by-Step Workflow
+###  Step-by-Step Workflow
 
 1. **User Interaction:**
    - Users access the web application through a browser to perform registrations, bookings, donations, or check slot availability.
@@ -69,9 +69,9 @@ Below is a high-level workflow of how the Agadgaon Devotee Management System ope
 This workflow ensures a seamless experience for users and provides developers with a robust and maintainable system architecture.
 
 
-## 🔐 EC2 Setup Instructions
+## EC2 Setup Instructions
 
-### 1️⃣ Update Linux System
+### Update Linux System
 
 ```bash
 sudo yum update -y
@@ -79,7 +79,7 @@ sudo yum update -y
 
 ---
 
-### 2️⃣ Install Java 17
+###  Install Java 17
 
 ```bash
 sudo yum install java-17-amazon-corretto-devel -y
@@ -88,7 +88,7 @@ java -version
 
 ---
 
-### 3️⃣ Install Node.js
+###  Install Node.js
 
 ```bash
 curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash-
@@ -99,7 +99,7 @@ npm -v
 
 ---
 
-### 4️⃣ Install NGINX
+###  Install NGINX
 
 ```bash
 sudo yum install nginx -y
@@ -110,7 +110,7 @@ sudo systemctl reload nginx
 
 ---
 
-### 5️⃣ Install MySQL (MariaDB)
+###  Install MySQL (MariaDB)
 
 ```bash
 sudo yum install mariadb105-server -y
@@ -133,7 +133,7 @@ sudo mysql -u root -p
 
 ---
 
-### 6️⃣ Use PM2 to Run Spring Boot JAR
+### Use PM2 to Run Spring Boot JAR
 
 ```bash
 sudo npm install -g pm2
@@ -148,7 +148,7 @@ pm2 logs spring-app
 
 ---
 
-### 7️⃣ Restart & Check NGINX
+###  Restart & Check NGINX
 
 ```bash
 sudo nginx -t
@@ -174,7 +174,7 @@ scp -i .\Downloads\manualDeployment.pem -r "D:\AgadgoanApplication\DevoteeApplic
 
 ---
 
-### 9️⃣ Production Build Commands
+###  Production Build Commands
 
 ```bash
 ng build --configuration=production 
@@ -183,7 +183,7 @@ mvn clean install
 
 ---
 
-### 🔟 NGINX Configuration for Custom Domain
+### NGINX Configuration for Custom Domain
 
 ```bash
 sudo nano /etc/nginx/nginx.conf
@@ -229,13 +229,13 @@ sudo systemctl restart nginx
 
 ---
 
-## 🌐 Custom Domain Setup via GoDaddy
+## Custom Domain Setup via GoDaddy
 
 This section explains how to connect your domain `engineeringprojectsdemo.com` (purchased from GoDaddy) to your deployed application hosted on an AWS EC2 instance.
 
 ---
 
-### ✅ Prerequisites
+###  Prerequisites
 
 - A running AWS EC2 instance with a public IPv4 address (e.g., `3.94.85.57`)
 - A registered domain on [GoDaddy](https://www.godaddy.com)
@@ -243,7 +243,7 @@ This section explains how to connect your domain `engineeringprojectsdemo.com` (
 
 ---
 
-### 🔁 Step 1: Get Your EC2 Public IP
+###  Step 1: Get Your EC2 Public IP
 
 1. Go to your AWS [EC2 Dashboard](https://console.aws.amazon.com/ec2).
 2. Locate your instance.
@@ -251,7 +251,7 @@ This section explains how to connect your domain `engineeringprojectsdemo.com` (
 
 ---
 
-### 🛠️ Step 2: Configure DNS in GoDaddy
+###  Step 2: Configure DNS in GoDaddy
 
 1. Log in to [GoDaddy](https://www.godaddy.com)
 2. Navigate to **My Products**.
@@ -271,7 +271,7 @@ Click **Save** after each update.
 
 ---
 
-### ⏳ Step 3: Wait for DNS Propagation
+###  Step 3: Wait for DNS Propagation
 
 DNS changes typically take **5–30 minutes** to propagate globally. You can check propagation using tools like:
 
@@ -280,7 +280,7 @@ DNS changes typically take **5–30 minutes** to propagate globally. You can che
 
 ---
 
-### 🧪 Step 4: Verify Setup
+###  Step 4: Verify Setup
 
 - Visit `http://engineeringprojectsdemo.com`
 - Ensure your frontend loads successfully
@@ -288,7 +288,7 @@ DNS changes typically take **5–30 minutes** to propagate globally. You can che
 
 ---
 
-### 🏠 Live Home Page
+###  Live Home Page
 
 Below is the screenshot of the live homepage of the Agadgaon Devotee Management System:
 
@@ -296,13 +296,13 @@ Below is the screenshot of the live homepage of the Agadgaon Devotee Management 
 ---
 
 
-## 🔄 CI/CD Integration using Jenkins 
+## CI/CD Integration using Jenkins 
 
 This section explains the Jenkins pipeline setup used to automate the build and deployment of the Agadgaon Devotee Management System. The pipeline builds both the **Spring Boot backend** and the **Angular frontend**, then deploys them to an **AWS EC2 Linux instance**.
 
 ---
 
-## 🛠️ Jenkins Pipeline Configuration
+##  Jenkins Pipeline Configuration
 
 The following is the full jenkins Declarative pipeline script configured in the **Jenkinsfile**:
 
@@ -388,19 +388,19 @@ pipeline {
 }
 ```
 
-## 🖼️ Jenkins CI/CD Pipeline Execution Workflow
+##  Jenkins CI/CD Pipeline Execution Workflow
 
 This section outlines the key execution steps of the Jenkins pipeline used to build and deploy the **Agadgaon Devotee Management System**.
 
 ---
 
-### 🔧 Step 1: Source Code Checkout
+###  Step 1: Source Code Checkout
 - Jenkins clones the project from the GitHub repository.
 - Ensures the latest codebase is used for every pipeline run.
 
 ---
 
-### ⚙️ Step 2: Backend Build (Spring Boot)
+###  Step 2: Backend Build (Spring Boot)
 - Jenkins executes Maven build commands:
   - `mvn clean package -DskipTests`
 - Generates the `.jar` file located at:
@@ -408,7 +408,7 @@ This section outlines the key execution steps of the Jenkins pipeline used to bu
 
 ---
 
-### 🧱 Step 3: Frontend Build (Angular)
+###  Step 3: Frontend Build (Angular)
 - Jenkins installs dependencies and builds the Angular app:
   - `npm install`
   - `npm run build --configuration=production`
@@ -417,20 +417,20 @@ This section outlines the key execution steps of the Jenkins pipeline used to bu
 
 ---
 
-### 📤 Step 4: Deployment to AWS EC2
+### Step 4: Deployment to AWS EC2
 - Backend `.jar` file is securely copied to EC2 using `scp`.
 - Angular build files are also copied to NGINX root folder.
 - Remote `ssh` command restarts the backend application via `java -jar`.
 
 ---
 
-### ✅ Step 5: Final Confirmation
+### Step 5: Final Confirmation
 - Jenkins logs indicate all stages have completed successfully.
 - The pipeline ends with a green checkmark.
 
 ---
 
-### 📸 Final Success Pipeline Run
+###  Final Success Pipeline Run
 
 > The image below shows the successful execution of the entire CI/CD pipeline:
 
@@ -439,15 +439,15 @@ This section outlines the key execution steps of the Jenkins pipeline used to bu
 
 ---
 
-## ✅ Conclusion
+## Conclusion
 
 The **Agadgaon Devotee Management System** stands as a robust and scalable full-stack application built to streamline and digitize the end-to-end process of devotee management. By utilizing modern technologies like **Angular**, **Spring Boot**, **MySQL**, and cloud services like **AWS EC2**, the system ensures:
 
-- 🔄 **Efficient automation** via Jenkins-based CI/CD pipeline  
-- 🧑‍💻 **Simplified operations** for both administrators and users  
-- 🚀 **Quick deployment** and seamless integration through Git + Jenkins + EC2  
-- 🧩 **Modular architecture** that promotes future scalability and maintainability  
-- 🌐 **Reliable hosting** with custom domain integration and NGINX reverse proxy  
+-  **Efficient automation** via Jenkins-based CI/CD pipeline  
+-  **Simplified operations** for both administrators and users  
+-  **Quick deployment** and seamless integration through Git + Jenkins + EC2  
+-  **Modular architecture** that promotes future scalability and maintainability  
+- **Reliable hosting** with custom domain integration and NGINX reverse proxy  
 
 This project not only demonstrates technical proficiency but also addresses a real-world community need, creating lasting impact through digital transformation.
 
